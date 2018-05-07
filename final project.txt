@@ -1,16 +1,17 @@
-What the game is
-----------------
-RPG?
-
+	What the game is
+---------------------------
+	RPG?
+	
 
 __________Need's___________
 	Actually works
 	Movement
-	Combat
+	Combat System
 	
 	
 	
-
+	
+	
 __________Want's___________
 	Menu Screen
 	Good Assets
