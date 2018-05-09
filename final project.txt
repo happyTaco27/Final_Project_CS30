@@ -14,10 +14,7 @@ __________Need's___________
 	RNGesus	(Donovan)
 	
 	
-	
-	
-	
-	
+
 __________Want's___________
 	Menu Screen	(Cain)
 	Good Assets	(Cain)
@@ -25,10 +22,15 @@ __________Want's___________
 	Skill tree	(Donovan)
 	classes(mage,warrior,rouge)	(Cain/Donovan)
 	inventory system	(Cain)
-	npc's
-	
+	npc's	(Cain)
 ___________Maybe___________
 	LAN???
 	crits?
 	difficulty selection
 	AI movment(path-finding)
+	starter guide
+	actual dialogue
+	dynamic weather?
+	lore
+	story
+	
