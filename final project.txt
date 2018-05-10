@@ -1,6 +1,5 @@
 	What the game is
 ---------------------------
-	Wamen?
 	RPG?
 	(Rouge-like-game)
 	RTS or turn-based
