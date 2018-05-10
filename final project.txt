@@ -5,23 +5,24 @@
 	RTS or turn-based
 	D&D-esque
 __________Need's___________
-	Actually works	(Everyone)
-	Movement	(Xyre)
-	Combat System	(Xyre)
-	items	(Xyre/Donovan)
-	AI	(Xyre/Donovan)
-	RNGesus	(Donovan)
-	
+	[ ]Actually works	(Everyone)
+	[ ]Movement	(Xyre)
+	[ ]Combat System	(Xyre)
+	[ ]items	(Xyre/Donovan)
+	[ ]AI	(Xyre/Donovan)
+	[ ]RNGesus	(Donovan)
+	[ ]Enemies	(Donovan/Cain)
+	[ ]Skill tree	(Donovan)
+	[?]Level's	(Donovan)
 	
 
 __________Want's___________
-	Menu Screen	(Cain)
-	Good Assets	(Cain)
-	random gen worlds	(Xyre/Donovan)
-	Skill tree	(Donovan)
-	classes(mage,warrior,rouge)	(Cain/Donovan)
-	inventory system	(Cain)
-	npc's	(Cain)
+	[ ]Menu Screen	(Cain)
+	[ ]Good Assets	(Cain)
+	[ ]random gen worlds	(Xyre/Donovan)
+	[ ]classes(mage,warrior,rouge)	(Cain/Donovan)
+	[ ]inventory system	(Cain)
+	[ ]npc's	(Cain)
 ___________Maybe___________
 	LAN???
 	crits?
