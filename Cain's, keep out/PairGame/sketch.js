@@ -2,6 +2,8 @@
 // Xyre Abelanes and Cain Rhode
 // May 5th, 2018
 
+let state = "startMenu";
+
 let rows = 14;
 let cols = 32;
 let grid;
@@ -97,6 +99,9 @@ function setup() {
 }
 
 function draw() {
+  if (state === "startMenu") {
+    displayMainMenu();
+  }
   background(0, 200, 255);
   displayGrid();
   playerThing();
@@ -104,7 +109,10 @@ function draw() {
   movePlayer();
 }
 
-
+function dispalyMainMenu() {
+  rectMode(CENTER);
+  
+}
 
 //disables window scrolling (was previously made by Xyre)
 function noscroll() {
@@ -221,6 +229,7 @@ function playerThing() {
 function menuBar() {
   fill(153, 102, 51);
   image(menuTexture, 0, rows * 44, width, 5 * cellSize);
+
 }
 
 //goes to the next level(map)
