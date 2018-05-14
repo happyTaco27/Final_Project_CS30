@@ -8,15 +8,13 @@ __________Need's___________
 	[ ]Actually works	(Everyone)
 	[ ]Movement	(Xyre)
 	[ ]Combat System	(Xyre)
-	[ ]items	(Xyre/Donovan)
-	[ ]AI	(Xyre/Donovan)
 	[ ]RNGesus	(Donovan)
 	[ ]Enemies	(Donovan/Cain)
 	[ ]Skill tree	(Donovan)
 	[?]Level's	(Donovan)
-	
-
 __________Want's___________
+	[ ]AI	(Xyre/Donovan)
+	[ ]items	(Xyre/Donovan)
 	[ ]Menu Screen	(Cain)
 	[ ]Good Assets	(Cain)
 	[ ]random gen worlds	(Xyre/Donovan)
