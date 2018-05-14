@@ -3,49 +3,44 @@
 // 10 May, 2018
 let moveX;
 let moveY;
-let nextMoveX;
-let nextMoveY;
-let rows = 15;
-let cols = 20;
+let rows = 14;
+let cols = 32;
 let grid;
 let cellSize;
+let testGrounds;
+
+function preload() {
+  testGrounds = "assets/Levels/TestGrounds.txt"
+  loadLines = loadStrings(testGrounds);
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  cellSize = width / (cols * 1.8);
+  cellSize = width / (cols * 1.1);
   grid = createEmpty2dArray(cols, rows)
-  moveX = 400;
-  moveY = 200;
+  moveX = 0;
+  moveY = 0;
+
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      let tileType = loadLines[x][y];
+      grid[x][y] = tileType;
+    }
+  }
 }
 
 function draw() {
   background(255);
   displayGrid();
-  fill(255, 0, 255);
-  rect(moveX, moveY, 50, 50);
-  if (mouseIsPressed) {
-    isMoving();
-  }
+  playerThing();
 }
 
-function isMoving() {
-  //up
-  if (moveY >= nextMoveY) {
-    moveY -= 5;
-  }
-  //down
-  else if (moveY <= nextMoveY) {
-    moveY += 5;
-  }
-  //left
-  if (moveX >= nextMoveX) {
-    moveX -= 5;
-  }
-  //right
-  else if (moveX <= nextMoveX) {
-    moveX += 5;
-  }
+// disables window scrolling
+function noscroll() {
+  window.scrollTo(0, 0);
 }
+
+window.addEventListener("scroll", noscroll);
 
 function displayGrid() {
   for (let x = 0; x < cols; x++) {
@@ -67,9 +62,40 @@ function displayGrid() {
   }
 }
 
+function playerThing() {
+  grid[moveX][moveY] = "2";
+}
+
 function mouseClicked() {
-  nextMoveX = mouseX;
-  nextMoveY = mouseY;
+  //Up
+  if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
+    moveY--;
+  }
+  //Down
+  else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
+    moveY++;
+  }
+  //Left
+  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
+    moveX--;
+  }
+  //Right
+  else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
+    moveX++;
+  }
+  clearOutBodies();
+}
+
+function clearOutBodies() {
+  let theGrid = grid;
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      if (theGrid[x][y] === "2") {
+        theGrid[x][y] = "0";
+      }
+    }
+  }
+  return theGrid;
 }
 
 function createEmpty2dArray(cols, rows) {
