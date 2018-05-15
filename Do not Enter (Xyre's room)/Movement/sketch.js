@@ -8,10 +8,15 @@ let cols = 32;
 let grid;
 let cellSize;
 let testGrounds;
+let floorTile;
+let wallTile;
 
 function preload() {
-  testGrounds = "assets/Levels/TestGrounds.txt"
+  testGrounds = "assets/Levels/TestGrounds.txt";
   loadLines = loadStrings(testGrounds);
+
+  floorTile = loadImage("images/Tile_5.png");
+  wallTile = loadImage("images/qubodup-light_wood.png");
 }
 
 function setup() {
@@ -32,6 +37,7 @@ function setup() {
 function draw() {
   background(255);
   displayGrid();
+  borderThingy();
   playerThing();
 }
 
@@ -46,24 +52,30 @@ function displayGrid() {
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       if (grid[x][y] === 0 || grid[x][y] === "0") {
-        fill(240);
+        image(floorTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
       else if (grid[x][y] === 2 || grid[x][y] === "2") {
         fill(255, 50, 50);
+        // noStroke();
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
       else if (grid[x][y] === 3 || grid[x][y] === "3") {
         fill(0, 255, 50);
       }
       else {
-        fill(50);
+        image(wallTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
-      rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
 }
 
 function playerThing() {
   grid[moveX][moveY] = "2";
+}
+
+function borderThingy() {
+  noFill();
+  rect(0, 0, cols * cellSize, rows * cellSize);
 }
 
 function mouseClicked() {
