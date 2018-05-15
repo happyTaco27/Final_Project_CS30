@@ -2,6 +2,8 @@
 // Xyre Abelanes and Cain Rhode
 // May 5th, 2018
 
+let state = "startMenu";
+
 let rows = 14;
 let cols = 32;
 let grid;
@@ -46,7 +48,7 @@ function preload() {
   mapDataTwo = loadStrings(mapLoadTwo);
   mapDataThree = loadStrings(mapLoadThree);
 
-  menuTexture = loadImage("images/qubodup-light_wood.png");
+  menuTexture = loadImage("assets/sprites/statusbar.png");
   commonTile = loadImage("images/Tile_5.png");
   upperTile = loadImage("images/Tile_8.png");
   upperTileRightOpening = loadImage("images/Tile_11.png");
@@ -97,11 +99,19 @@ function setup() {
 }
 
 function draw() {
+  if (state === "startMenu") {
+    displayMainMenu();
+  }
   background(0, 200, 255);
   displayGrid();
   playerThing();
   menuBar();
   movePlayer();
+}
+
+function dispalyMainMenu() {
+  rectMode(CENTER);
+  
 }
 
 //disables window scrolling (was previously made by Xyre)
@@ -218,7 +228,8 @@ function playerThing() {
 
 function menuBar() {
   fill(153, 102, 51);
-  image(menuTexture, 0, rows * cellSize, width, 3 * cellSize);
+  image(menuTexture, 0, rows * 44, width, 5 * cellSize);
+
 }
 
 //goes to the next level(map)
