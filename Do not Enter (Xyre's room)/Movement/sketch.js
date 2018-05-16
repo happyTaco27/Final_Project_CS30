@@ -10,10 +10,13 @@ let cellSize;
 let testGrounds;
 let floorTile;
 let wallTile;
+let charFSide;
 
 function preload() {
   testGrounds = "assets/Levels/TestGrounds.txt";
   loadLines = loadStrings(testGrounds);
+
+  charFSide = loadImage("images/Front1.png");
 
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
@@ -25,6 +28,7 @@ function setup() {
   grid = createEmpty2dArray(cols, rows)
   moveX = 0;
   moveY = 0;
+  strokeWeight(2);
 
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
@@ -55,9 +59,7 @@ function displayGrid() {
         image(floorTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
       else if (grid[x][y] === 2 || grid[x][y] === "2") {
-        fill(255, 50, 50);
-        // noStroke();
-        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+        image(charFSide, x * cellSize, y * cellSize, cellSize, cellSize);
       }
       else if (grid[x][y] === 3 || grid[x][y] === "3") {
         fill(0, 255, 50);
