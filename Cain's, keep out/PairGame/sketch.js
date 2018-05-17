@@ -12,6 +12,7 @@ let testGrounds;
 let blankSpace;
 let floorTile;
 let wallTile;
+let charTile;
 let charFSide;
 let charBSide;
 let charLSide;
@@ -40,8 +41,9 @@ function setup() {
   cellSize = width / (cols * 1.1);
   grid = createEmpty2dArray(cols, rows);
   gridSpace = createEmpty2dArray(cols, rows);
-  moveX = 0;
-  moveY = 0;
+  moveX = 5;
+  moveY = 13;
+  charTile = charFSide;
   strokeWeight(2);
 
   for (let x = 0; x < cols; x++) {
@@ -75,7 +77,7 @@ function noscroll() {
 
 function menuBar() {
   fill(153, 102, 51);
-  image(menuTexture, 0, rows * 44, width, 5 * cellSize);
+  image(menuTexture, 0, rows * 42, width, 6 * cellSize);
 }
 
 
@@ -84,16 +86,17 @@ window.addEventListener("scroll", noscroll);
 function displayGrid() {
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
-      if (grid[x][y] === "f") {
+      if (grid[x][y] === "0") {
         image(floorTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
-      else if (grid[x][y] === "d") {
-        fill(0, 255, 50);
+      else if (grid[x][y] === "2") {
+        fill(0);
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
       else {
         image(wallTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
-      rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      // rect(x * cellSize, y * cellSize, cellSize, cellSize);
     }
   }
 }
@@ -102,21 +105,7 @@ function displayObjects() {
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
-        if (floor(mouseY / cellSize) === moveY && floor(mouseX / cellSize) === moveX) {
-          image(charFSide, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-        if (floor(mouseY / cellSize) >= moveY && floor(mouseX / cellSize) >= moveX && floor(mouseX / cellSize) <= moveX) {
-          image(charFSide, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-        else if (floor(mouseY / cellSize) <= moveY && floor(mouseX / cellSize) >= moveX && floor(mouseX / cellSize) <= moveX) {
-          image(charBSide, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-        if (floor(mouseX / cellSize) >= moveX && floor(mouseY / cellSize) >= moveY && floor(mouseY / cellSize) <= moveY) {
-          image(charRSide, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
-        else if (floor(mouseX / cellSize) <= moveX && floor(mouseY / cellSize) >= moveY && floor(mouseY / cellSize) <= moveY) {
-          image(charLSide, x * cellSize, y * cellSize, cellSize, cellSize);
-        }
+        image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
   }
@@ -133,20 +122,24 @@ function borderThingy() {
 
 function mouseClicked() {
   //Up
-  if (floor(mouseY / cellSize) < moveY && gridSpace[moveX][moveY - 1] === "0") {
+  if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
     moveY--;
+    charTile = charBSide;
   }
   //Down
-  else if (floor(mouseY / cellSize) > moveY && gridSpace[moveX][moveY + 1] === "0") {
+  else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
     moveY++;
+    charTile = charFSide;
   }
   //Left
-  if (floor(mouseX / cellSize) < moveX && gridSpace[moveX - 1][moveY] === "0") {
+  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
     moveX--;
+    charTile = charLSide;
   }
   //Right
-  else if (floor(mouseX / cellSize) > moveX && gridSpace[moveX + 1][moveY] === "0") {
+  else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
     moveX++;
+    charTile = charRSide;
   }
   clearOutBodies();
 }
