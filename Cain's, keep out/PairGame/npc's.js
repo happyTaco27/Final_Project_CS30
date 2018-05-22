@@ -1,0 +1,7 @@
+function createEnemies() {
+  
+}
+
+function createPeacefulPeople() {
+  
+}
