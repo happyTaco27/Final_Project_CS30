@@ -2,13 +2,13 @@
 ---------------------------
 	RPG?
 	(Rouge-like-game)
-	RTS or turn-based
+	turn-based
 	D&D-esque
 __________Need's___________
 	[ ]Actually works	(Everyone)
-	[ ]Movement	(Xyre)
+	[?]Movement	(Xyre)
 	[ ]Combat System	(Xyre)
-	[ ]RNGesus	(Donovan)
+	[?]RNGesus	(Donovan)
 	[ ]Enemies	(Donovan/Cain)
 	[ ]Skill tree	(Donovan)
 	[?]Level's	(Donovan)

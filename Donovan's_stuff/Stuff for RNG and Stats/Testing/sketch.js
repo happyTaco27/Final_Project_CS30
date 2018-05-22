@@ -2,11 +2,12 @@
 //10,5,18
 //testing for RNG and stats (S.P.E.T.I.A.L)
 let softSkillsPoints;
-let exp,lvl,currentExp,expEarned,expToLevelUp;
+let exp,newExp,lvl,currentExp,expEarned,expToLevelUp;
 let s,p,e,t,i,a,l,newS,newP,newE,newT,newI,newA,newL;
 let sizeOfSkillTile;
 let ifInventoryIsOpen=false;
 let d20;
+let counter=0;
 sizeOfSkillTile=100;
 newS=s;
 newP=p;
@@ -31,13 +32,9 @@ function setup() {
   i=round(random(20));
   a=round(random(20));
   l=round(random(20));
+  print("Exp needed: ",expToLevelUp," Level: ",lvl);
   print("S:",s," P:",p," E:",e," T:",t," I:",i," A:",a," L:",l);
   print("Soft Skill Point Remaining:",softSkillsPoints);
-  (document).on("keypress", function(event) {
-    if (event.keyCode === 9) {   //tab pressed
-      return false; // stops its action
-    }
-  });
 }
 function draw() {
   levelUp();
@@ -45,6 +42,11 @@ function draw() {
   background(255);
 }
 function statCheck(){
+}
+function gainExp()  {
+  if(keyIsDown(UP_ARROW)){
+    counter+1;
+  }
 }
 function levelUp(){
   let lvlUpD20=round(random(20));
