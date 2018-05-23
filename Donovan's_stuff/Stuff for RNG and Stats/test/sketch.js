@@ -1,17 +1,19 @@
 //Donovan Godthjaelpsen
 //10,5,18
-//testing for RNG and stats (S.P.E.T.I.A.L)
+//testing for RNG and stats (S.P.E.C.I.A.L) V.0.0.1
 let softSkillsPoints;
 let exp,lvl,currentExp,expEarned,expToLevelUp;
-let s,p,e,t,i,a,l,newS,newP,newE,newT,newI,newA,newL;
+let s,p,e,c,i,a,l,newS,newP,newE,newC,newI,newA,newL;
+let aiS,aiP,aiE,aiC,aiI,aiA,aiL;
 let sizeOfSkillTile;
 let ifInventoryIsOpen=false;
 let d20;
+let counter;
 sizeOfSkillTile=100;
 newS=s;
 newP=p;
 newE=e;
-newT=t;
+newC=c;
 newI=i;
 newA=a;
 newL=l;
@@ -21,30 +23,44 @@ softSkillsPoints=5;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //setting counter
+  counter=0;
+  //setting starting exp
+  exp=0;
   //base level exp requirements
   expToLevelUp=10;
   //core Stats
-  s=round(random(20));
-  p=round(random(20));
-  e=round(random(20));
-  t=round(random(20));
-  i=round(random(20));
-  a=round(random(20));
-  l=round(random(20));
-  print("S:",s," P:",p," E:",e," T:",t," I:",i," A:",a," L:",l);
+  makingStats();
+  print("--------------------------------------------------------");
+  print("Player's Stats:");
+  print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
+  print("S:",s," P:",p," E:",e," C:",c," I:",i," A:",a," L:",l);
   print("Soft Skill Point Remaining:",softSkillsPoints);
-  (document).on("keypress", function(event) {
-    if (event.keyCode === 9) {   //tab pressed
-      return false; // stops its action
-    }
-  });
+  print("--------------------------------------------------------");
+  print("Ai's Stats:");
+  print("S:",aiS," P:",aiP," E:",aiE," C:",aiC," I:",aiI," A:",aiA," L:",aiL);
+  print("--------------------------------------------------------");
 }
 function draw() {
   levelUp();
-  skillTree();
   background(255);
+  if(mouseIsPressed){
+    exp++;
+  }
 }
-function statCheck(){
+function dice20(){
+  d20=round(random(20));
+}
+function statCheck(x,aiX){
+  if(x<aiX){
+    return x--;
+  }
+  if(x===aiX){
+    return x;
+  }
+  if(x>aiX){
+    return x++;
+  }
 }
 function levelUp(){
   let lvlUpD20=round(random(20));
@@ -56,26 +72,35 @@ function levelUp(){
     if(round(lvl%3)===0){
       softSkillsPoints++;
     }
-    print("Exp needed: ",expToLevelUp," Level: ",lvl);
-    print("S:",s," P:",p," E:",e," T:",t," I:",i," A:",a," L:",l);
+    print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
+    print("S:",s," P:",p," E:",e," C:",c," I:",i," A:",a," L:",l);
     print("Current Soft Skill Points:",softSkillsPoints);
   }
 }
 //haven't found a use for this yet
 function stats()  {
 }
-//This is for the soft skills and feats
-function skillTree()   {
-  let teir1,teir2,teir3,teir4,teir5,teir6;
-  let pacifist=[];
-  let neutral=[];
-  let anarchist=[];
-  fill(0);
-  rect(0,0,width,height);
+// function mouseIsPressed(){
+//   if (mouseIsPressed){
+//     exp++;
+//   }
+// }
+function enemyStats() {
+
 }
-// key binds
-function keyPressed(){
-  if(keyCode===TAB){
-    skillTree();
-  }
+function makingStats()  {
+  s=round(random(20));
+  p=round(random(20));
+  e=round(random(20));
+  c=round(random(20));
+  i=round(random(20));
+  a=round(random(20));
+  l=round(random(20));
+  aiS=round(random(20));
+  aiP=round(random(20));
+  aiE=round(random(20));
+  aiC=round(random(20));
+  aiI=round(random(20));
+  aiA=round(random(20));
+  aiL=round(random(20));
 }
