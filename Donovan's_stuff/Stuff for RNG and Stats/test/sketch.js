@@ -1,22 +1,16 @@
 //Donovan Godthjaelpsen
 //10,5,18
 //testing for RNG and stats (S.P.E.C.I.A.L) V.0.0.1
+let playerBonus;
 let softSkillsPoints;
 let exp,lvl,currentExp,expEarned,expToLevelUp;
-let s,p,e,c,i,a,l,newS,newP,newE,newC,newI,newA,newL;
+let s,p,e,c,i,a,l;
 let aiS,aiP,aiE,aiC,aiI,aiA,aiL;
-let sizeOfSkillTile;
+let special;
+let aiSpecial;
 let ifInventoryIsOpen=false;
 let d20;
 let counter;
-sizeOfSkillTile=100;
-newS=s;
-newP=p;
-newE=e;
-newC=c;
-newI=i;
-newA=a;
-newL=l;
 lvl=1;
 exp=0;
 softSkillsPoints=5;
@@ -31,6 +25,8 @@ function setup() {
   expToLevelUp=10;
   //core Stats
   makingStats();
+  special=[s,p,e,c,i,a,l];
+  aiSpecial=[aiS,aiP,aiE,aiC,aiI,aiA,aiL];
   print("--------------------------------------------------------");
   print("Player's Stats:");
   print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
@@ -43,6 +39,7 @@ function setup() {
 }
 function draw() {
   levelUp();
+  statCheck();
   background(255);
   if(mouseIsPressed){
     exp++;
@@ -51,15 +48,17 @@ function draw() {
 function dice20(){
   d20=round(random(20));
 }
-function statCheck(x,aiX){
-  if(x<aiX){
-    return x--;
-  }
-  if(x===aiX){
-    return x;
-  }
-  if(x>aiX){
-    return x++;
+function statCheck(){
+  for(let x=0;x<special.length-1;x++){
+    if(special[x]<aiSpecial[x]){
+      playerBonus=-1;
+    }
+    if(special[x]===aiSpecial[x]){
+      playerBonus=0;
+    }
+    if(special[x]>aiSpecial[x]){
+      playerBonus=1;
+    }
   }
 }
 function levelUp(){
@@ -80,11 +79,6 @@ function levelUp(){
 //haven't found a use for this yet
 function stats()  {
 }
-// function mouseIsPressed(){
-//   if (mouseIsPressed){
-//     exp++;
-//   }
-// }
 function enemyStats() {
 
 }
@@ -104,3 +98,17 @@ function makingStats()  {
   aiA=round(random(20));
   aiL=round(random(20));
 }
+// class Ai {
+//   constructor() {
+//     this.aiS=aiS;
+//     this.aiP=aiP;
+//     this.aiE=aiE;
+//     this.aiC=aiC;
+//     this.aiI=aiI;
+//     this.aiA=aiA;
+//     this.aiL=aiL;
+//   }
+//   statCheck(){
+//
+//   }
+// }
