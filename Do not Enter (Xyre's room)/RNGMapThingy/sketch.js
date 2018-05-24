@@ -8,8 +8,14 @@ let rows;
 let cols;
 let floorTile;
 let wallTile;
+let blankSpace;
+let loadLevel;
+let gridSpace;
 
 function preload() {
+  blankSpace = "assets/Levels/BlankSpace.txt";
+  loadLevel = loadStrings(blankSpace);
+
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
 }
@@ -19,6 +25,15 @@ function setup() {
   rows = 32;
   cols = 14;
   cellSize = width / (rows * 1.1);
+  gridSpace = createEmpty2dArray(rows, cols);
+
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      let tileType = loadLevel[x][y];
+      gridSpace[x][y] = tileType;
+    }
+  }
+
   base = createMap();
   grid = terraform(base);
 }
@@ -26,6 +41,7 @@ function setup() {
 function draw() {
   background(255);
   displayGrid();
+  displayObjects();
 }
 
 function displayGrid() {
@@ -34,8 +50,23 @@ function displayGrid() {
       if (grid[x][y] === 0) {
         image(floorTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
+      else if (grid[x][y] === 'O') {
+        fill(0);
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      }
       else {
         image(wallTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+    }
+  }
+}
+
+function displayObjects() {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
+        fill(255);
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
   }
@@ -56,7 +87,7 @@ function arrayMaker(num, xLength, yLength) {
 function createMap() {
   let maxTunnels = 50,
     maxLength = 10,
-    map = arrayMaker(1, rows, cols),
+    map = arrayMaker('O', rows, cols),
     currentRow = floor(random() * rows),
     currentColumn = floor(random() * cols),
     directions = [
@@ -103,16 +134,27 @@ function createMap() {
 
 function terraform(map) {
   let player = 0;
-  for (let x = 0; x < xLength; x++) {
-    for (let y = 0; y < yLength; y++) {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
       if (map[x][y] === 0 && player === 0) {
-        map[x][y] = 2;
+        gridSpace[x][y] = 2;
         player = 1;
       }
-      else if (map[x][y] != 0 && map[x + 1][y] != 0 && map[x - 1][y] != 0 && map[x][y + 1] != 0 && map[x][y - 1] != 0) {
-        map[x][y] = 'O'
+      else if (map[x][y] === 'O' && x >= 0 && x < cols && y >= 0 && y < rows) {
+        map[x][y] = 1;
       }
     }
   }
   return map;
+}
+
+function createEmpty2dArray(rows, cols) {
+  let emptyGrid = [];
+  for (let x = 0; x < rows; x++) {
+    emptyGrid.push([]);
+    for (let y = 0; y < cols; y++) {
+      emptyGrid[x].push(0);
+    }
+  }
+  return emptyGrid;
 }
