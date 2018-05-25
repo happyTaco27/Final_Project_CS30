@@ -1,7 +1,7 @@
 //Donovan Godthjaelpsen
 //10,5,18
 //testing for RNG and stats (S.P.E.C.I.A.L) V.0.0.1
-let playerBonus;
+let playerBonus=[];
 let softSkillsPoints;
 let exp,lvl,currentExp,expEarned,expToLevelUp;
 let s,p,e,c,i,a,l;
@@ -17,16 +17,17 @@ softSkillsPoints=5;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //setting counter
-  counter=0;
   //setting starting exp
   exp=0;
   //base level exp requirements
   expToLevelUp=10;
-  //core Stats
-  makingStats();
+  //Stats for Players
   special=[s,p,e,c,i,a,l];
+  //Stats for ai
   aiSpecial=[aiS,aiP,aiE,aiC,aiI,aiA,aiL];
+  makingStats();
+  statCheck();
+
   print("--------------------------------------------------------");
   print("Player's Stats:");
   print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
@@ -36,10 +37,18 @@ function setup() {
   print("Ai's Stats:");
   print("S:",aiS," P:",aiP," E:",aiE," C:",aiC," I:",aiI," A:",aiA," L:",aiL);
   print("--------------------------------------------------------");
+  print("Stat Check:");
+  print("S:",playerBonus[0]);
+  print("P:",playerBonus[1]);
+  print("E:",playerBonus[2]);
+  print("C:",playerBonus[3]);
+  print("I:",playerBonus[4]);
+  print("A:",playerBonus[5]);
+  print("L:",playerBonus[6]);
+  print("--------------------------------------------------------");
 }
 function draw() {
   levelUp();
-  statCheck();
   background(255);
   if(mouseIsPressed){
     exp++;
@@ -49,15 +58,15 @@ function dice20(){
   d20=round(random(20));
 }
 function statCheck(){
-  for(let x=0;x<special.length-1;x++){
+  for(let x=0;x<aiSpecial.length;x++){
     if(special[x]<aiSpecial[x]){
-      playerBonus=-1;
+      playerBonus.push("Less");
     }
-    if(special[x]===aiSpecial[x]){
-      playerBonus=0;
+    else if(special[x]>aiSpecial[x]){
+      playerBonus.push("Greater");
     }
-    if(special[x]>aiSpecial[x]){
-      playerBonus=1;
+    else{
+      playerBonus.push("Even");
     }
   }
 }
@@ -98,17 +107,3 @@ function makingStats()  {
   aiA=round(random(20));
   aiL=round(random(20));
 }
-// class Ai {
-//   constructor() {
-//     this.aiS=aiS;
-//     this.aiP=aiP;
-//     this.aiE=aiE;
-//     this.aiC=aiC;
-//     this.aiI=aiI;
-//     this.aiA=aiA;
-//     this.aiL=aiL;
-//   }
-//   statCheck(){
-//
-//   }
-// }
