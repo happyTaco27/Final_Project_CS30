@@ -17,6 +17,11 @@ let charFSide;
 let charBSide;
 let charLSide;
 let charRSide;
+let health;
+let mana;
+let activeItem;
+let activeSpell;
+
 
 function preload() {
   testGrounds = "assets/Levels/TestGrounds.txt";
@@ -32,6 +37,8 @@ function preload() {
 
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
+
+  barTexture = loadImage("assets/sprites/statusbar.png")
 }
 
 function setup() {
@@ -65,6 +72,44 @@ function draw() {
   displayObjects();
   borderThingy();
   playerThing();
+  menuBar();
+}
+
+function menuBar() {
+  fill(153, 102, 51);
+  image(barTexture, 0, rows * 42, width, 6 * cellSize);
+}
+
+function healthPoints() {
+
+}
+
+function displayHealthPoints() {
+
+}
+
+function manaPoints() {
+
+}
+
+function displayManaPoints() {
+
+}
+
+function currentItem() {
+
+}
+
+function displayCurrentItem() {
+
+}
+
+function currentSpell() {
+
+}
+
+function displayCurrentSpell() {
+  
 }
 
 // disables window scrolling
@@ -73,6 +118,8 @@ function noscroll() {
 }
 
 window.addEventListener("scroll", noscroll);
+
+
 
 function displayGrid() {
   for (let x = 0; x < cols; x++) {
