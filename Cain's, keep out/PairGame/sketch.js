@@ -19,6 +19,8 @@ let charLSide;
 let charRSide;
 let health;
 let mana;
+let activeItem;
+let activeSpell;
 
 
 function preload() {
@@ -78,6 +80,21 @@ function menuBar() {
   image(barTexture, 0, rows * 42, width, 6 * cellSize);
 }
 
+function healthPoints() {
+  
+}
+
+function manaPoints() {
+
+}
+
+function currentItem() {
+
+}
+
+function currentSpell() {
+
+}
 
 // disables window scrolling
 function noscroll() {
