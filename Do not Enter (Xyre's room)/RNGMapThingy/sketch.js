@@ -47,11 +47,24 @@ function setup() {
   grid = terraform(base);
 }
 
+function noscroll() {
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener("scroll", noscroll);
+
 function draw() {
   background(255);
   displayGrid();
   displayObjects();
+  borderThingy();
 }
+
+function borderThingy() {
+  noFill();
+  rect(0, 0, rows * cellSize, cols * cellSize);
+}
+
 
 function displayGrid() {
   for (let x = 0; x < rows; x++) {
@@ -93,7 +106,7 @@ function arrayMaker(num, xLength, yLength) {
 }
 
 function createMap() {
-  let maxTunnels = 25,
+  let maxTunnels = 50,
     maxLength = 8,
     map = arrayMaker('O', rows, cols),
     currentRow = floor(random() * rows),
