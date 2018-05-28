@@ -11,11 +11,9 @@ let wallTile;
 let blankSpace;
 let loadLevel;
 let gridSpace;
-let stairTile1;
-let stairTile2;
-let stairTile3;
-let stairTile4;
 let randomizer;
+let startTile;
+let endTile;
 
 function preload() {
   blankSpace = "assets/Levels/BlankSpace.txt";
@@ -23,10 +21,8 @@ function preload() {
 
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
-  stairTile1 = loadImage("images/Tile_14.png");
-  stairTile2 = loadImage("images/Tile_15.png");
-  stairTile3 = loadImage("images/Tile_16.png");
-  stairTile4 = loadImage("images/Tile_17.png");
+  startTile = loadImage("images/ladderup.png");
+  endTile = loadImage("images/ladderdown.png");
 }
 
 function setup() {
@@ -87,7 +83,7 @@ function displayObjects() {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
       if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
-        image(stairTile3, x * cellSize, y * cellSize, cellSize, cellSize);
+        image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
   }
