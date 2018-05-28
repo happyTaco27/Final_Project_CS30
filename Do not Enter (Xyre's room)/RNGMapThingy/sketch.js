@@ -14,12 +14,20 @@ let gridSpace;
 let randomizer;
 let startTile;
 let endTile;
+let moveX;
+let moveY;
+let testGrounds;
+let charTile;
+let charFSide;
+let charBSide;
+let charLSide;
+let charRSide;
 
 function preload() {
   blankSpace = "assets/Levels/BlankSpace.txt";
   loadLevel = loadStrings(blankSpace);
 
-  floorTile = loadImage("images/Tile_5.png");
+  floorTile = loadImage("images/floortile1.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
   startTile = loadImage("images/ladderup.png");
   endTile = loadImage("images/ladderdown.png");
