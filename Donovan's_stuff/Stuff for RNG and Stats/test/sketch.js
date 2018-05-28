@@ -1,6 +1,6 @@
 //Donovan Godthjaelpsen
 //10,5,18
-//testing for RNG and stats (S.P.E.C.I.A.L) V.0.0.1
+//testing for RNG and stats (S.P.E.C.I.A.L) V.0.2
 let playerBonus=[];
 let buff=[];
 let softSkillsPoints;
@@ -10,12 +10,18 @@ let aiSpecial;
 let ifInventoryIsOpen=false;
 let d20;
 let counter;
+let statBar;
 lvl=1;
 exp=0;
 softSkillsPoints=5;
 
+function preload(){
+  statBar=loadImage("images/statusbar.png");
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
   //setting starting exp
   exp=0;
   //base level exp requirements
@@ -32,7 +38,7 @@ function setup() {
   print("Player's Stats:");
   print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
   print("S:",special[0],"(",buff[0],")"," P:",special[1],"(",buff[1],")"," E:",special[2],"(",buff[2],")"," C:",special[3],
-    "(",buff[3],")"," I:",special[4],"(",buff[4],")"," A:",special[5],"(",buff[5],")"," L:",special[6],"(",buff[6]),")";
+    "(",buff[3],")"," I:",special[4],"(",buff[4],")"," A:",special[5],"(",buff[5],")"," L:",special[6],"(",buff[6],")");
   print("Soft Skill Point Remaining:",softSkillsPoints);
   print("--------------------------------------------------------");
   print("Ai's Stats:");
@@ -56,7 +62,7 @@ function makingStats()  {
     //Player's stats
     special.push(round(random(20,5)));
     //AI stats
-    aiSpecial.push(round(random(20)));
+    aiSpecial.push(round(random(15,5)));
   }
 }
 //Checking if player get's extra stats for each skills
@@ -81,6 +87,7 @@ function buffCheck()  {
 }
 //constat running functions//
 function draw() {
+  menuBar();
   levelUp();
   background(255);
   if(mouseIsPressed){
@@ -119,4 +126,12 @@ function levelUp(){
     print("S:",special[0]," P:",special[1]," E:",special[2]," C:",special[3]," I:",special[4]," A:",special[5]," L:",special[6]);
     print("Current Soft Skill Points:",softSkillsPoints);
   }
+}
+//un-useable at current time
+// function skillTree(){
+//
+// }
+function menuBar() {
+  fill(153, 102, 51);
+  image(statBar,0,0);
 }
