@@ -11,6 +11,11 @@ let wallTile;
 let blankSpace;
 let loadLevel;
 let gridSpace;
+let stairTile1;
+let stairTile2;
+let stairTile3;
+let stairTile4;
+let randomizer;
 
 function preload() {
   blankSpace = "assets/Levels/BlankSpace.txt";
@@ -18,6 +23,10 @@ function preload() {
 
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
+  stairTile1 = loadImage("images/Tile_14.png");
+  stairTile2 = loadImage("images/Tile_15.png");
+  stairTile3 = loadImage("images/Tile_16.png");
+  stairTile4 = loadImage("images/Tile_17.png");
 }
 
 function setup() {
@@ -33,7 +42,7 @@ function setup() {
       gridSpace[x][y] = tileType;
     }
   }
-
+  randomizer = random(4)
   base = createMap();
   grid = terraform(base);
 }
@@ -65,8 +74,7 @@ function displayObjects() {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
       if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
-        fill(255);
-        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+        image(stairTile3, x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
   }
@@ -85,8 +93,8 @@ function arrayMaker(num, xLength, yLength) {
 }
 
 function createMap() {
-  let maxTunnels = 50,
-    maxLength = 10,
+  let maxTunnels = 25,
+    maxLength = 8,
     map = arrayMaker('O', rows, cols),
     currentRow = floor(random() * rows),
     currentColumn = floor(random() * cols),
@@ -140,8 +148,31 @@ function terraform(map) {
         gridSpace[x][y] = 2;
         player = 1;
       }
-      else if (map[x][y] === 'O' && x >= 0 && x < cols && y >= 0 && y < rows) {
-        map[x][y] = 1;
+      if (map[x][y] === 0) {
+        if (x - 1 >= 0 && map[x - 1][y] === 'O') {
+          map[x - 1][y] = 1;
+        }
+        if (x + 1 < rows && map[x + 1][y] === 'O') {
+          map[x + 1][y] = 1;
+        }
+        if (y - 1 >= 0 && map[x][y - 1] === 'O') {
+          map[x][y - 1] = 1;
+        }
+        if (y + 1 < cols && map[x][y + 1] === 'O') {
+          map[x][y + 1] = 1;
+        }
+        if (x - 1 >= 0 && y - 1 >= 0 && map[x - 1][y - 1] === 'O') {
+          map[x - 1][y - 1] = 1;
+        }
+        if (x + 1 < rows && y + 1 < cols && map[x + 1][y + 1] === 'O') {
+          map[x + 1][y + 1] = 1;
+        }
+        if (x - 1 >= 0 && y + 1 < cols && map[x - 1][y + 1] === 'O') {
+          map[x - 1][y + 1] = 1;
+        }
+        if (x + 1 < rows && y - 1 >= 0 && map[x + 1][y - 1] === 'O') {
+          map[x + 1][y - 1] = 1;
+        }
       }
     }
   }
