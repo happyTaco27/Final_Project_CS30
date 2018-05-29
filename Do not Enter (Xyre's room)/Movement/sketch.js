@@ -72,7 +72,7 @@ function noscroll() {
   window.scrollTo(0, 0);
 }
 
-window.addEventListener("scroll", noscroll);
+window.addEventListener("scroll", noscroll());
 
 function displayGrid() {
   for (let x = 0; x < cols; x++) {

@@ -1,59 +1,50 @@
-// RnGMapThingy
+// Movement Function for Final Project
 // Xyre Abelanes
-// 17 May, 2018
+// 10 May, 2018
 
-let grid;
-let cellSize;
-let rows;
-let cols;
-let floorTile;
-let wallTile;
-let blankSpace;
-let loadLevel;
-let gridSpace;
-let randomizer;
-let startTile;
-let endTile;
-
-function preload() {
-  blankSpace = "assets/Levels/BlankSpace.txt";
-  loadLevel = loadStrings(blankSpace);
-
-  floorTile = loadImage("images/floortile1.png");
-  wallTile = loadImage("images/qubodup-light_wood.png");
-  startTile = loadImage("images/ladderup.png");
-  endTile = loadImage("images/ladderdown.png");
-}
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  rows = 32;
-  cols = 14;
-  cellSize = width / (rows * 1.1);
-  gridSpace = createEmpty2dArray(rows, cols);
-
-  for (let x = 0; x < rows; x++) {
-    for (let y = 0; y < cols; y++) {
-      let tileType = loadLevel[x][y];
-      gridSpace[x][y] = tileType;
-    }
-  }
-  randomizer = random(4)
-  base = createMap();
-  grid = terraform(base);
-}
-
-function draw() {
-  background(255);
-  displayGrid();
-  displayObjects();
-  borderThingy();
-  noscroll();
+function playerThing() {
+  gridSpace[moveX][moveY] = "2";
 }
 
 function borderThingy() {
   noFill();
-  rect(0, 0, rows * cellSize, cols * cellSize);
+  rect(0, 0, cols * cellSize, rows * cellSize);
+}
+
+function mouseClicked() {
+  //Up
+  if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
+    moveY--;
+    charTile = charBSide;
+  }
+  //Down
+  else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
+    moveY++;
+    charTile = charFSide;
+  }
+  //Left
+  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
+    moveX--;
+    charTile = charLSide;
+  }
+  //Right
+  else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
+    moveX++;
+    charTile = charRSide;
+  }
+  clearOutBodies();
+}
+
+function clearOutBodies() {
+  let theGrid = playerSpace;
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      if (theGrid[x][y] === "2") {
+        theGrid[x][y] = "0";
+      }
+    }
+  }
+  return theGrid;
 }
 
 function noscroll() {
@@ -85,6 +76,9 @@ function displayObjects() {
     for (let y = 0; y < cols; y++) {
       if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
         image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+      if (playerSpace[x][y] === 2 || playerSpace[x][y] === "2") {
+        image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
   }
@@ -155,7 +149,10 @@ function terraform(map) {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
       if (map[x][y] === 0 && player === 0) {
-        gridSpace[x][y] = 2;
+        gridSpace[x][y] = "2";
+        playerSpace[x][y] = "2";
+        moveX = x;
+        moveY = y;
         player = 1;
       }
       if (map[x][y] === 0) {
