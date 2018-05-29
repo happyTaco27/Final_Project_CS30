@@ -1,70 +1,42 @@
 // Movement Function for Final Project
 // Xyre Abelanes
 // 10 May, 2018
-let moveX;
-let moveY;
-let rows = 14;
-let cols = 32;
-let grid;
-let gridSpace;
-let cellSize;
-let testGrounds;
-let blankSpace;
-let floorTile;
-let wallTile;
-let charTile;
-let charFSide;
-let charBSide;
-let charLSide;
-let charRSide;
 
-function preload() {
-  testGrounds = "assets/Levels/TestGrounds.txt";
-  loadLines0 = loadStrings(testGrounds);
-
-  blankSpace = "assets/Levels/BlankSpace.txt";
-  loadLines1 = loadStrings(blankSpace);
-
-  charFSide = loadImage("images/Front1.png");
-  charBSide = loadImage("images/Back1.png");
-  charLSide = loadImage("images/Left1.png");
-  charRSide = loadImage("images/Right1.png");
-
-  floorTile = loadImage("images/Tile_5.png");
-  wallTile = loadImage("images/qubodup-light_wood.png");
+function menuBar() {
+  fill(153, 102, 51);
+  image(barTexture, 0, rows * 42, width, 6 * cellSize);
 }
 
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  cellSize = width / (cols * 1.1);
-  grid = createEmpty2dArray(cols, rows);
-  gridSpace = createEmpty2dArray(cols, rows);
-  moveX = 5;
-  moveY = 13;
-  charTile = charFSide;
-  strokeWeight(2);
+function healthPoints() {
 
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      let tileType = loadLines0[x][y];
-      grid[x][y] = tileType;
-    }
-  }
-
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      let tileType = loadLines1[x][y];
-      gridSpace[x][y] = tileType;
-    }
-  }
 }
 
-function draw() {
-  background(255);
-  displayGrid();
-  displayObjects();
-  borderThingy();
-  playerThing();
+function displayHealthPoints() {
+
+}
+
+function manaPoints() {
+
+}
+
+function displayManaPoints() {
+
+}
+
+function currentItem() {
+
+}
+
+function displayCurrentItem() {
+
+}
+
+function currentSpell() {
+
+}
+
+function displayCurrentSpell() {
+
 }
 
 // disables window scrolling
@@ -73,6 +45,8 @@ function noscroll() {
 }
 
 window.addEventListener("scroll", noscroll);
+
+
 
 function displayGrid() {
   for (let x = 0; x < cols; x++) {
@@ -114,6 +88,7 @@ function borderThingy() {
 }
 
 function mouseClicked() {
+  print("X: ",mouseX," Y: ",mouseY);
   //Up
   if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
     moveY--;
