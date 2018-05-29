@@ -14,14 +14,6 @@ let gridSpace;
 let randomizer;
 let startTile;
 let endTile;
-let moveX;
-let moveY;
-let testGrounds;
-let charTile;
-let charFSide;
-let charBSide;
-let charLSide;
-let charRSide;
 
 function preload() {
   blankSpace = "assets/Levels/BlankSpace.txt";
