@@ -12,7 +12,6 @@ let blankSpace;
 let loadLevel;
 let loadLevel1;
 let gridSpace;
-let randomizer;
 let startTile;
 let endTile;
 let moveX;
@@ -63,7 +62,6 @@ function setup() {
       playerSpace[x][y] = tileType;
     }
   }
-  randomizer = random(4)
   base = createMap();
   grid = terraform(base);
   charTile = charFSide;

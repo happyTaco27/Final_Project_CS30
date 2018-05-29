@@ -3,32 +3,32 @@
 // 10 May, 2018
 
 function playerThing() {
-  gridSpace[moveX][moveY] = "2";
+  playerSpace[moveX][moveY] = "2";
 }
 
 function borderThingy() {
   noFill();
-  rect(0, 0, cols * cellSize, rows * cellSize);
+  rect(0, 0, rows * cellSize, cols * cellSize);
 }
 
 function mouseClicked() {
   //Up
-  if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
+  if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === 0) {
     moveY--;
     charTile = charBSide;
   }
   //Down
-  else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
+  else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === 0) {
     moveY++;
     charTile = charFSide;
   }
   //Left
-  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
+  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === 0) {
     moveX--;
     charTile = charLSide;
   }
   //Right
-  else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
+  else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === 0) {
     moveX++;
     charTile = charRSide;
   }
@@ -40,7 +40,7 @@ function clearOutBodies() {
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       if (theGrid[x][y] === "2") {
-        theGrid[x][y] = "0";
+        theGrid[x][y] = 0;
       }
     }
   }
@@ -74,9 +74,9 @@ function displayGrid() {
 function displayObjects() {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
-      if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
-        image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
-      }
+      // if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
+      //   image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      // }
       if (playerSpace[x][y] === 2 || playerSpace[x][y] === "2") {
         image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
