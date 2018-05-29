@@ -87,9 +87,10 @@ function buffCheck()  {
 }
 //constat running functions//
 function draw() {
-  menuBar();
-  levelUp();
   background(255);
+  display();
+  levelUp();
+
   if(mouseIsPressed){
     exp++;
   }
@@ -131,7 +132,6 @@ function levelUp(){
 // function skillTree(){
 //
 // }
-function menuBar() {
-  fill(153, 102, 51);
+function display(){
   image(statBar,0,0);
 }
