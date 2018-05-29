@@ -47,7 +47,7 @@ function noscroll() {
   window.scrollTo(0, 0);
 }
 
-window.addEventListener("scroll", noscroll);
+window.addEventListener("scroll", noscroll());
 
 function draw() {
   background(255);
