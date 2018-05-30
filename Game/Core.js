@@ -1,23 +1,14 @@
-let grid;
-let rows = 14;
-let cols = 32;
+let grid,rows,cols;
 let moveX,moveY;
-let playerBonus=[];
+let playerBonus=[],buff=[];
 let health,mana;
-let buff=[];
 let softSkillsPoints;
 let exp,lvl,currentExp,expEarned,expToLevelUp;
-let special;
-let aiSpecial;
-// let ifInventoryIsOpen=false;
+let special,aiSpecial;
 let d20;
-let counter;
 let statBar;
-let gridSpace;
-let cellSize;
-let testGrounds;
-let blankSpace;
-let floorTile,wallTile,charTile;
+let gridSpace,cellSize;
+let floorTile,wallTile,charTile,testGrounds,blankSpace;
 let charFSide,charBSide,charLSide,charRSide;
 let activeSpell,activeItem;
 let loadLines0,loadLines1;
@@ -43,39 +34,50 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  //setting level
+  lvl=1;
+  //setting starting exp
+  exp=0;
+  //base level exp requirements
+  expToLevelUp=10;
+  //setting starting soft skill points
+  softSkillsPoints=5;
+  //Stats for Players
+  special=[];
+  //Stats for ai
+  aiSpecial=[];
+  //Setting row and col size
+  rows = 14;
+  cols = 32;
   cellSize = width / (cols * 1.1);
-  grid = createEmpty2dArray(cols, rows);
-  gridSpace = createEmpty2dArray(cols, rows);
+  //Setting move speed
   moveX = 5;
   moveY = 13;
   charTile = charFSide;
+  //Creating the grid
+  grid = createEmpty2dArray(cols, rows);
+  gridSpace = createEmpty2dArray(cols, rows);
   strokeWeight(2);
-
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       let tileType = loadLines0[x][y];
       grid[x][y] = tileType;
     }
   }
-
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
       let tileType = loadLines1[x][y];
       gridSpace[x][y] = tileType;
     }
   }
-  //setting starting exp
-  exp=0;
-  //base level exp requirements
-  expToLevelUp=10;
-  //Stats for Players
-  special=[];
-  //Stats for ai
-  aiSpecial=[];
+  //In triggeredEvents.js
   makingStats();
+  //In triggeredEvents.js
   statCheck();
+  //In triggeredEvents.js
   buffCheck();
 
+  //For debugging stats
   print("--------------------------------------------------------");
   print("Player's Stats:");
   print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
@@ -105,8 +107,9 @@ function draw() {
   borderThingy();
   playerThing();
   menuBar();
-
-  // if(mouseIsPressed){
-  //   exp++;
-  // }
 }
+function noscroll() {
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener("scroll", noscroll); 

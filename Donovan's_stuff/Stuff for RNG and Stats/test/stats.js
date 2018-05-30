@@ -92,7 +92,7 @@ function draw() {
   levelUp();
 
   if(mouseIsPressed){
-    exp++;
+    levelUp();
   }
 }
 function dice20(){
