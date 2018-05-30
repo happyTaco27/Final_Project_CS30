@@ -3,7 +3,7 @@
 // 10 May, 2018
 
 function playerThing() {
-  playerSpace[moveX][moveY] = "2";
+  playerSpace[moveX][moveY] = 2;
 }
 
 function borderThingy() {
@@ -23,7 +23,7 @@ function mouseClicked() {
     charTile = charFSide;
   }
   //Left
-  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === 0) {
+  else if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === 0) {
     moveX--;
     charTile = charLSide;
   }
@@ -37,9 +37,9 @@ function mouseClicked() {
 
 function clearOutBodies() {
   let theGrid = playerSpace;
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      if (theGrid[x][y] === "2") {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (theGrid[x][y] === 2) {
         theGrid[x][y] = 0;
       }
     }
@@ -150,7 +150,7 @@ function terraform(map) {
     for (let y = 0; y < cols; y++) {
       if (map[x][y] === 0 && player === 0) {
         gridSpace[x][y] = "2";
-        playerSpace[x][y] = "2";
+        playerSpace[x][y] = 2;
         moveX = x;
         moveY = y;
         player = 1;

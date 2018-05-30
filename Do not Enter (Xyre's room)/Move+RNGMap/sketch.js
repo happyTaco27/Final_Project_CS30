@@ -73,5 +73,6 @@ function draw() {
   displayGrid();
   displayObjects();
   borderThingy();
+  playerThing();
   noscroll();
 }
