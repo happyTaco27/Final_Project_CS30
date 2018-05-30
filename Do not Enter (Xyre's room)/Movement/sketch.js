@@ -10,8 +10,10 @@ let gridSpace;
 let cellSize;
 let testGrounds;
 let blankSpace;
+let highlightSpace;
 let floorTile;
 let wallTile;
+let highlightTile;
 let charTile;
 let charFSide;
 let charBSide;
@@ -32,6 +34,7 @@ function preload() {
 
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
+  highlightTile = loadImage("images/tilehighlight.png");
 }
 
 function setup() {
@@ -39,6 +42,7 @@ function setup() {
   cellSize = width / (cols * 1.1);
   grid = createEmpty2dArray(cols, rows);
   gridSpace = createEmpty2dArray(cols, rows);
+  highlightSpace = createEmpty2dArray(cols, rows);
   moveX = 5;
   moveY = 13;
   charTile = charFSide;
@@ -103,6 +107,41 @@ function displayObjects() {
     }
   }
 }
+
+function possibleMoveTiles(map) {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (map[x][y] === 0) {
+        if (x - 1 >= 0 && map[x - 1][y] === 0) {
+          map[x - 1][y] = 1;
+        }
+        if (x + 1 < rows && map[x + 1][y] === 0) {
+          map[x + 1][y] = 1;
+        }
+        if (y - 1 >= 0 && map[x][y - 1] === 0) {
+          map[x][y - 1] = 1;
+        }
+        if (y + 1 < cols && map[x][y + 1] === 0) {
+          map[x][y + 1] = 1;
+        }
+        if (x - 1 >= 0 && y - 1 >= 0 && map[x - 1][y - 1] === 0) {
+          map[x - 1][y - 1] = 1;
+        }
+        if (x + 1 < rows && y + 1 < cols && map[x + 1][y + 1] === 0) {
+          map[x + 1][y + 1] = 1;
+        }
+        if (x - 1 >= 0 && y + 1 < cols && map[x - 1][y + 1] === 0) {
+          map[x - 1][y + 1] = 1;
+        }
+        if (x + 1 < rows && y - 1 >= 0 && map[x + 1][y - 1] === 0) {
+          map[x + 1][y - 1] = 1;
+        }
+      }
+    }
+  }
+  return map;
+}
+
 
 function playerThing() {
   gridSpace[moveX][moveY] = "2";
