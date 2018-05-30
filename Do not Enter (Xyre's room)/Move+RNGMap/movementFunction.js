@@ -74,9 +74,9 @@ function displayGrid() {
 function displayObjects() {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
-      // if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
-      //   image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
-      // }
+      if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
+        image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
       if (playerSpace[x][y] === 2 || playerSpace[x][y] === "2") {
         image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
