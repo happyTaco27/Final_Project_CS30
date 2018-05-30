@@ -48,44 +48,7 @@ window.addEventListener("scroll", noscroll);
 
 
 
-function displayGrid() {
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
 
-      if (grid[x][y] === "0") {
-        image(floorTile, x * cellSize, y * cellSize, cellSize, cellSize);
-      }
-
-      else if (grid[x][y] === "2") {
-        fill(0);
-        rect(x * cellSize, y * cellSize, cellSize, cellSize);
-      }
-      else {
-        image(wallTile, x * cellSize, y * cellSize, cellSize, cellSize);
-      }
-      // rect(x * cellSize, y * cellSize, cellSize, cellSize);
-    }
-  }
-}
-
-function displayObjects() {
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
-        image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
-      }
-    }
-  }
-}
-
-function playerThing() {
-  gridSpace[moveX][moveY] = "2";
-}
-
-function borderThingy() {
-  noFill();
-  rect(0, 0, cols * cellSize, rows * cellSize);
-}
 
 function mouseClicked() {
   print("X: ",mouseX," Y: ",mouseY);
