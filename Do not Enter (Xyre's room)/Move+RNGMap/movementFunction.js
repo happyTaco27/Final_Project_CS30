@@ -2,15 +2,18 @@
 // Xyre Abelanes
 // 10 May, 2018
 
+// Whatever the number of the moveX and moveY variables are will determine the player's location
 function playerThing() {
   playerSpace[moveX][moveY] = 2;
 }
 
+//Just sets out a nice border around th grid
 function borderThingy() {
   noFill();
   rect(0, 0, rows * cellSize, cols * cellSize);
 }
 
+// Wherever you click, the character will move towards that direction
 function mouseClicked() {
   //Up
   if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === 0) {

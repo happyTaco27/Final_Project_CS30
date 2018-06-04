@@ -19,6 +19,7 @@ let charFSide;
 let charBSide;
 let charLSide;
 let charRSide;
+let isCharClicked;
 
 function preload() {
   testGrounds = "assets/Levels/TestGrounds.txt";
@@ -46,6 +47,7 @@ function setup() {
   moveX = 5;
   moveY = 13;
   charTile = charFSide;
+  isCharClicked = false;
   strokeWeight(2);
 
   for (let x = 0; x < rows; x++) {
@@ -62,7 +64,9 @@ function draw() {
   displayObjects();
   borderThingy();
   playerThing();
-  possibleMoveTiles(gridSpace);
+  if (isCharClicked) {
+    possibleMoveTiles(gridSpace);
+  }
 }
 
 // disables window scrolling
@@ -99,7 +103,8 @@ function displayObjects() {
         image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
       if (gridSpace[x][y] === 1 || gridSpace[x][y] === "1") {
-        fill(0, 100, 255, 100);
+        fill(0, 100, 255, 50);
+        stroke(30, 90, 210);
         rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
@@ -113,15 +118,27 @@ function possibleMoveTiles(map) {
       if (map[x][y] === 2) {
         if (x - 1 >= 0 && otherMap[x - 1][y] === "0") {
           map[x - 1][y] = 1;
+          if (x - 2 >= 0 && otherMap[x - 2][y] === "0") {
+            map[x - 2][y] = 1;
+          }
         }
         if (x + 1 < rows && otherMap[x + 1][y] === "0") {
           map[x + 1][y] = 1;
+          if (x + 2 < rows && otherMap[x + 2][y] === "0") {
+            map[x + 2][y] = 1;
+          }
         }
         if (y - 1 >= 0 && otherMap[x][y - 1] === "0") {
           map[x][y - 1] = 1;
+          if (y - 2 >= 0 && otherMap[x][y - 2] === "0") {
+            map[x][y - 2] = 1;
+          }
         }
         if (y + 1 < cols && otherMap[x][y + 1] === "0") {
           map[x][y + 1] = 1;
+          if (y + 2 < cols && otherMap[x][y + 2] === "0") {
+            map[x][y + 2] = 1;
+          }
         }
         if (x - 1 >= 0 && y - 1 >= 0 && otherMap[x - 1][y - 1] === "0") {
           map[x - 1][y - 1] = 1;
@@ -152,25 +169,63 @@ function borderThingy() {
 }
 
 function mouseClicked() {
-  //Up
-  if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
-    moveY--;
-    charTile = charBSide;
+  //Selecting Character
+  if (floor(mouseY / cellSize) === moveY && floor(mouseX / cellSize) === moveX) {
+    isCharClicked = !isCharClicked;
   }
-  //Down
-  if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
-    moveY++;
-    charTile = charFSide;
-  }
-  //Left
-  if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
-    moveX--;
-    charTile = charLSide;
-  }
-  //Right
-  if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
-    moveX++;
-    charTile = charRSide;
+  if (isCharClicked) {
+    //Up-Right
+    if (floor(mouseY / cellSize) < moveY && floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY - 1] === "0") {
+      moveY--;
+      moveX++;
+      charTile = charRSide;
+      isCharClicked = false;
+    }
+    //Up-Left
+    else if (floor(mouseY / cellSize) < moveY && floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY - 1] === "0") {
+      moveY--;
+      moveX--;
+      charTile = charLSide;
+      isCharClicked = false;
+    }
+    //Down-Right
+    else if (floor(mouseY / cellSize) > moveY && floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY + 1] === "0") {
+      moveY++;
+      moveX++;
+      charTile = charRSide;
+      isCharClicked = false;
+    }
+    //Down-Left
+    else if (floor(mouseY / cellSize) > moveY && floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY + 1] === "0") {
+      moveY++;
+      moveX--;
+      charTile = charLSide;
+      isCharClicked = false;
+    }
+    //Up
+    else if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
+      moveY--;
+      charTile = charBSide;
+      isCharClicked = false;
+    }
+    //Down
+    else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
+      moveY++;
+      charTile = charFSide;
+      isCharClicked = false;
+    }
+    //Left
+    else if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
+      moveX--;
+      charTile = charLSide;
+      isCharClicked = false;
+    }
+    //Right
+    else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
+      moveX++;
+      charTile = charRSide;
+      isCharClicked = false;
+    }
   }
   possibleMoveTiles(gridSpace);
   clearOutBodies();
