@@ -99,11 +99,16 @@ function displayGrid() {
 function displayObjects() {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
-      if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
+      if (gridSpace[x][y] === 2) {
         image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
       }
-      if (gridSpace[x][y] === 1 || gridSpace[x][y] === "1") {
+      else if (gridSpace[x][y] === 1) {
         fill(0, 100, 255, 50);
+        stroke(30, 90, 210);
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+      else if (gridSpace[x][y] === 3) {
+        fill(255, 0, 255, 50);
         stroke(30, 90, 210);
         rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
@@ -116,28 +121,44 @@ function possibleMoveTiles(map) {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
       if (map[x][y] === 2) {
+        //Left
         if (x - 1 >= 0 && otherMap[x - 1][y] === "0") {
           map[x - 1][y] = 1;
           if (x - 2 >= 0 && otherMap[x - 2][y] === "0") {
             map[x - 2][y] = 1;
           }
+          if (x - 3 >= 0 && otherMap[x - 3][y] === "0") {
+            map[x - 3][y] = 3;
+          }
         }
+        //Right
         if (x + 1 < rows && otherMap[x + 1][y] === "0") {
           map[x + 1][y] = 1;
           if (x + 2 < rows && otherMap[x + 2][y] === "0") {
             map[x + 2][y] = 1;
           }
+          if (x + 3 < rows && otherMap[x + 3][y] === "0") {
+            map[x + 3][y] = 3;
+          }
         }
+        //Up
         if (y - 1 >= 0 && otherMap[x][y - 1] === "0") {
           map[x][y - 1] = 1;
           if (y - 2 >= 0 && otherMap[x][y - 2] === "0") {
             map[x][y - 2] = 1;
           }
+          if (y - 3 >= 0 && otherMap[x][y - 3] === "0") {
+            map[x][y - 3] = 3;
+          }
         }
+        //Down
         if (y + 1 < cols && otherMap[x][y + 1] === "0") {
           map[x][y + 1] = 1;
           if (y + 2 < cols && otherMap[x][y + 2] === "0") {
             map[x][y + 2] = 1;
+          }
+          if (y + 3 < cols && otherMap[x][y + 3] === "0") {
+            map[x][y + 3] = 3;
           }
         }
         if (x - 1 >= 0 && y - 1 >= 0 && otherMap[x - 1][y - 1] === "0") {
@@ -175,54 +196,71 @@ function mouseClicked() {
   }
   if (isCharClicked) {
     //Up-Right
-    if (floor(mouseY / cellSize) < moveY && floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY - 1] === "0") {
+    if (floor(mouseY / cellSize) < moveY
+    && floor(mouseX / cellSize) > moveX
+    && grid[moveX + 1][moveY - 1] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
       moveY--;
       moveX++;
       charTile = charRSide;
       isCharClicked = false;
     }
     //Up-Left
-    else if (floor(mouseY / cellSize) < moveY && floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY - 1] === "0") {
+    else if (floor(mouseY / cellSize) < moveY
+    && floor(mouseX / cellSize) < moveX
+    && grid[moveX - 1][moveY - 1] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
       moveY--;
       moveX--;
       charTile = charLSide;
       isCharClicked = false;
     }
     //Down-Right
-    else if (floor(mouseY / cellSize) > moveY && floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY + 1] === "0") {
+    else if (floor(mouseY / cellSize) > moveY
+    && floor(mouseX / cellSize) > moveX
+    && grid[moveX + 1][moveY + 1] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
       moveY++;
       moveX++;
       charTile = charRSide;
       isCharClicked = false;
     }
     //Down-Left
-    else if (floor(mouseY / cellSize) > moveY && floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY + 1] === "0") {
+    else if (floor(mouseY / cellSize) > moveY && floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY + 1] === "0" && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
       moveY++;
       moveX--;
       charTile = charLSide;
       isCharClicked = false;
     }
     //Up
-    else if (floor(mouseY / cellSize) < moveY && grid[moveX][moveY - 1] === "0") {
-      moveY--;
+    else if (floor(mouseY / cellSize) < moveY
+    && grid[moveX][moveY - 1] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
+      moveY = floor(mouseY / cellSize);
       charTile = charBSide;
       isCharClicked = false;
     }
     //Down
-    else if (floor(mouseY / cellSize) > moveY && grid[moveX][moveY + 1] === "0") {
-      moveY++;
+    else if (floor(mouseY / cellSize) > moveY
+    && grid[moveX][moveY + 1] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
+      moveY = floor(mouseY / cellSize);
       charTile = charFSide;
       isCharClicked = false;
     }
     //Left
-    else if (floor(mouseX / cellSize) < moveX && grid[moveX - 1][moveY] === "0") {
-      moveX--;
+    else if (floor(mouseX / cellSize) < moveX
+    && grid[moveX - 1][moveY] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
+      moveX = floor(mouseX / cellSize);
       charTile = charLSide;
       isCharClicked = false;
     }
     //Right
-    else if (floor(mouseX / cellSize) > moveX && grid[moveX + 1][moveY] === "0") {
-      moveX++;
+    else if (floor(mouseX / cellSize) > moveX
+    && grid[moveX + 1][moveY] === "0"
+    && gridSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1 ) {
+      moveX = floor(mouseX / cellSize);
       charTile = charRSide;
       isCharClicked = false;
     }
@@ -239,6 +277,9 @@ function clearOutBodies() {
         theGrid[x][y] = 0;
       }
       if (theGrid[x][y] === 1) {
+        theGrid[x][y] = 0;
+      }
+      if (theGrid[x][y] === 3) {
         theGrid[x][y] = 0;
       }
     }
