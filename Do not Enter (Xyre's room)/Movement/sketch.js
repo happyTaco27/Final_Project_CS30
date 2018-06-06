@@ -118,6 +118,7 @@ function displayObjects() {
 
 function possibleMoveTiles(map) {
   let otherMap = grid;
+  //1 = can go to, 3 = can potentially attack or get attacked from
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
       if (map[x][y] === 2) {
@@ -126,9 +127,9 @@ function possibleMoveTiles(map) {
           map[x - 1][y] = 1;
           if (x - 2 >= 0 && otherMap[x - 2][y] === "0") {
             map[x - 2][y] = 1;
-          }
-          if (x - 3 >= 0 && otherMap[x - 3][y] === "0") {
-            map[x - 3][y] = 3;
+            if (x - 3 >= 0 && otherMap[x - 3][y] === "0") {
+              map[x - 3][y] = 3;
+            }
           }
         }
         //Right
@@ -136,9 +137,9 @@ function possibleMoveTiles(map) {
           map[x + 1][y] = 1;
           if (x + 2 < rows && otherMap[x + 2][y] === "0") {
             map[x + 2][y] = 1;
-          }
-          if (x + 3 < rows && otherMap[x + 3][y] === "0") {
-            map[x + 3][y] = 3;
+            if (x + 3 < rows && otherMap[x + 3][y] === "0") {
+              map[x + 3][y] = 3;
+            }
           }
         }
         //Up
@@ -146,9 +147,9 @@ function possibleMoveTiles(map) {
           map[x][y - 1] = 1;
           if (y - 2 >= 0 && otherMap[x][y - 2] === "0") {
             map[x][y - 2] = 1;
-          }
-          if (y - 3 >= 0 && otherMap[x][y - 3] === "0") {
-            map[x][y - 3] = 3;
+            if (y - 3 >= 0 && otherMap[x][y - 3] === "0") {
+              map[x][y - 3] = 3;
+            }
           }
         }
         //Down
@@ -156,22 +157,50 @@ function possibleMoveTiles(map) {
           map[x][y + 1] = 1;
           if (y + 2 < cols && otherMap[x][y + 2] === "0") {
             map[x][y + 2] = 1;
+            if (y + 3 < cols && otherMap[x][y + 3] === "0") {
+              map[x][y + 3] = 3;
+            }
           }
-          if (y + 3 < cols && otherMap[x][y + 3] === "0") {
-            map[x][y + 3] = 3;
-          }
         }
-        if (x - 1 >= 0 && y - 1 >= 0 && otherMap[x - 1][y - 1] === "0") {
-          map[x - 1][y - 1] = 1;
-        }
-        if (x + 1 < rows && y + 1 < cols && otherMap[x + 1][y + 1] === "0") {
-          map[x + 1][y + 1] = 1;
-        }
-        if (x - 1 >= 0 && y + 1 < cols && otherMap[x - 1][y + 1] === "0") {
-          map[x - 1][y + 1] = 1;
-        }
+        //Up-Right
         if (x + 1 < rows && y - 1 >= 0 && otherMap[x + 1][y - 1] === "0") {
           map[x + 1][y - 1] = 1;
+          if (x + 2 < rows && y - 1 >= 0 && otherMap[x + 2][y - 1] === "0") {
+            map[x + 2][y - 1] = 3;
+          }
+          if (x + 1 < rows && y - 2 >= 0 && otherMap[x + 1][y - 2] === "0") {
+            map[x + 1][y - 2] = 3;
+          }
+        }
+        //Up-Left
+        if (x - 1 >= 0 && y - 1 >= 0 && otherMap[x - 1][y - 1] === "0") {
+          map[x - 1][y - 1] = 1;
+          if (x - 2 >= 0 && y - 1 >= 0 && otherMap[x - 2][y - 1] === "0") {
+            map[x - 2][y - 1] = 3;
+          }
+          if (x - 1 >= 0 && y - 2 >= 0 && otherMap[x - 1][y - 2] === "0") {
+            map[x - 1][y - 2] = 3;
+          }
+        }
+        //Down-Right
+        if (x + 1 < rows && y + 1 < cols && otherMap[x + 1][y + 1] === "0") {
+          map[x + 1][y + 1] = 1;
+          if (x + 2 < rows && y + 1 < cols && otherMap[x + 2][y + 1] === "0") {
+            map[x + 2][y + 1] = 3;
+          }
+          if (x + 1 < rows && y + 2 < cols && otherMap[x + 1][y + 2] === "0") {
+            map[x + 1][y + 2] = 3;
+          }
+        }
+        //Down-Left
+        if (x - 1 >= 0 && y + 1 < cols && otherMap[x - 1][y + 1] === "0") {
+          map[x - 1][y + 1] = 1;
+          if (x - 2 >= 0 && y + 1 < cols && otherMap[x - 2][y + 1] === "0") {
+            map[x - 2][y + 1] = 3;
+          }
+          if (x - 1 >= 0 && y + 2 < cols && otherMap[x - 1][y + 2] === "0") {
+            map[x - 1][y + 2] = 3;
+          }
         }
       }
     }

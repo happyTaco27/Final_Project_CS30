@@ -8,7 +8,9 @@ let rows;
 let cols;
 let floorTile;
 let wallTile;
+let highlightTile;
 let blankSpace;
+let highlightSpace;
 let loadLevel;
 let loadLevel1;
 let gridSpace;
@@ -23,6 +25,7 @@ let charLSide;
 let charRSide;
 let playerSpace;
 let physicalSpace;
+let isCharClicked;
 
 
 function preload() {
@@ -74,6 +77,7 @@ function setup() {
   base = createMap();
   grid = terraform(base);
   charTile = charFSide;
+  isCharClicked = false;
   strokeWeight(2);
 }
 
@@ -83,6 +87,9 @@ function draw() {
   displayGrid();
   displayObjects();
   borderThingy();
-  playerThing();s
+  playerThing();
+  if (isCharClicked) {
+    possibleMoveTiles(gridSpace);
+  }
   noscroll();
 }
