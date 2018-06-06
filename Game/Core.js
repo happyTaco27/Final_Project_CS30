@@ -13,23 +13,34 @@ let charFSide,charBSide,charLSide,charRSide;
 let activeSpell,activeItem;
 let loadLines0,loadLines1;
 let barTexture;
+let loadLevel;
+let loadLevel1;
+let startTile;
+let endTile;
+let playerSpace;
+let physicalSpace;
+base = createMap();
+grid = terraform(base);
 
 function preload() {
-  testGrounds = "assets/Levels/TestGrounds.txt";
-  loadLines0 = loadStrings(testGrounds);
-
+  // This loads in the grids
   blankSpace = "assets/Levels/BlankSpace.txt";
-  loadLines1 = loadStrings(blankSpace);
+  loadLevel0 = loadStrings(blankSpace);
 
+  physicalSpace = "assets/Levels/TestGrounds.txt";
+  loadLevel1 = loadStrings(physicalSpace);
+
+  // This loads in the character sprite
   charFSide = loadImage("images/Front1.png");
   charBSide = loadImage("images/Back1.png");
   charLSide = loadImage("images/Left1.png");
   charRSide = loadImage("images/Right1.png");
 
-  floorTile = loadImage("images/Tile_5.png");
+  // This loads in the map tiles
+  floorTile = loadImage("images/floortile1.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
-
-  barTexture = loadImage("assets/sprites/statusbar.png");
+  startTile = loadImage("images/ladderup.png");
+  endTile = loadImage("images/ladderdown.png");
 }
 
 function setup() {
@@ -46,28 +57,28 @@ function setup() {
   special=[];
   //Stats for ai
   aiSpecial=[];
-  //Setting row and col size
-  rows = 14;
-  cols = 32;
-  cellSize = width / (cols * 1.1);
   //Setting move speed
   moveX = 5;
   moveY = 13;
   charTile = charFSide;
-  //Creating the grid
-  grid = createEmpty2dArray(cols, rows);
-  gridSpace = createEmpty2dArray(cols, rows);
-  strokeWeight(2);
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      let tileType = loadLines0[x][y];
-      grid[x][y] = tileType;
+  // This is quite important as anything that uses (cols, rows) will break
+  rows = 32;
+  cols = 14;
+  cellSize = width / (rows * 1.1);
+  // This prepares empty grids
+  gridSpace = createEmpty2dArray(rows, cols);
+  playerSpace = createEmpty2dArray(rows, cols);
+  // This puts in designated tile "roles" into the grids
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      let tileType = loadLevel0[x][y];
+      gridSpace[x][y] = tileType;
     }
   }
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      let tileType = loadLines1[x][y];
-      gridSpace[x][y] = tileType;
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      let tileType = loadLevel1[x][y];
+      playerSpace[x][y] = tileType;
     }
   }
   //In triggeredEvents.js
@@ -108,8 +119,142 @@ function draw() {
   playerThing();
   menuBar();
 }
-function noscroll() {
-  window.scrollTo(0, 0);
+function displayGrid() {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (grid[x][y] === 0) {
+        image(floorTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+      else if (grid[x][y] === "O") {
+        fill(0);
+        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+      else {
+        image(wallTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+    }
+  }
 }
 
-window.addEventListener("scroll", noscroll); 
+function displayObjects() {
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (gridSpace[x][y] === 2 || gridSpace[x][y] === "2") {
+        image(startTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+      if (playerSpace[x][y] === 2 || playerSpace[x][y] === "2") {
+        image(charTile, x * cellSize, y * cellSize, cellSize, cellSize);
+      }
+    }
+  }
+}
+function arrayMaker(num, xLength, yLength) {
+  let grid = [];
+  for (let x = 0; x < xLength; x++) {
+    grid.push([]);
+    for (let y = 0; y < yLength; y++) {
+      grid[x].push(num);
+    }
+  }
+  return grid;
+}
+
+function createMap() {
+  let maxTunnels = 50,
+    maxLength = 8,
+    map = arrayMaker("O", rows, cols),
+    currentRow = floor(random() * rows),
+    currentColumn = floor(random() * cols),
+    directions = [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1]],
+    lastDirection = [],
+    randomDirection;
+
+  while (maxTunnels && maxLength && rows && cols) {
+    do {
+      randomDirection = directions[floor(random() * directions.length)];
+    } while (randomDirection[0] === -lastDirection[0] &&
+          randomDirection[1] === -lastDirection[1] ||
+        randomDirection[0] === lastDirection[0] &&
+          randomDirection[1] === lastDirection[1]);
+    let randomLength = ceil(random() * maxLength),
+      tunnelLength = 0;
+
+    while (tunnelLength < randomLength) {
+      if (currentRow === 0 && randomDirection[0] === -1 ||
+          currentColumn === 0 && randomDirection[1] === -1 ||
+          currentRow === rows - 1 && randomDirection[0] === 1 ||
+          currentColumn === cols - 1 && randomDirection[1] === 1) {
+        break;
+      }
+      else {
+        map[currentRow][currentColumn] = 0;
+        currentRow += randomDirection[0];
+        currentColumn += randomDirection[1];
+        tunnelLength++;
+      }
+    }
+
+    if (tunnelLength) {
+      lastDirection = randomDirection;
+      maxTunnels--;
+    }
+  }
+  return map;
+}
+
+function terraform(map) {
+  let player = 0;
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (map[x][y] === 0 && player === 0) {
+        gridSpace[x][y] = "2";
+        playerSpace[x][y] = 2;
+        moveX = x;
+        moveY = y;
+        player = 1;
+      }
+      if (map[x][y] === 0) {
+        if (x - 1 >= 0 && map[x - 1][y] === "0") {
+          map[x - 1][y] = 1;
+        }
+        if (x + 1 < rows && map[x + 1][y] === "0") {
+          map[x + 1][y] = 1;
+        }
+        if (y - 1 >= 0 && map[x][y - 1] === "0") {
+          map[x][y - 1] = 1;
+        }
+        if (y + 1 < cols && map[x][y + 1] === "0") {
+          map[x][y + 1] = 1;
+        }
+        if (x - 1 >= 0 && y - 1 >= 0 && map[x - 1][y - 1] === "0") {
+          map[x - 1][y - 1] = 1;
+        }
+        if (x + 1 < rows && y + 1 < cols && map[x + 1][y + 1] === "0") {
+          map[x + 1][y + 1] = 1;
+        }
+        if (x - 1 >= 0 && y + 1 < cols && map[x - 1][y + 1] === "0") {
+          map[x - 1][y + 1] = 1;
+        }
+        if (x + 1 < rows && y - 1 >= 0 && map[x + 1][y - 1] === "0") {
+          map[x + 1][y - 1] = 1;
+        }
+      }
+    }
+  }
+  return map;
+}
+
+function createEmpty2dArray(rows, cols) {
+  let emptyGrid = [];
+  for (let x = 0; x < rows; x++) {
+    emptyGrid.push([]);
+    for (let y = 0; y < cols; y++) {
+      emptyGrid[x].push(0);
+    }
+  }
+  return emptyGrid;
+}

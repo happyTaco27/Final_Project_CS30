@@ -1,5 +1,5 @@
 //This is triggered when the game starts
-  //This makes the stats for the character and AI (AI's stats are place-holder atm for testing)
+//This makes the stats for the character and AI (AI's stats are place-holder atm for testing)
 function makingStats()  {
   for(let x=0;x<7;x++){
     //Player's stats
@@ -8,7 +8,7 @@ function makingStats()  {
     aiSpecial.push(round(random(15,5)));
   }
 }
-  //This checks what level each special trait is
+//This checks what level each special trait is
 function buffCheck(){
   for(let x=0;x<7;x++){
     if(special[x]<=5){
