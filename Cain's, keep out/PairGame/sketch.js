@@ -98,7 +98,9 @@ function statusMenu() {
 
 
 
-  pop();
+  if (keyCode === 9 || keyCode === 27) {
+    pop();
+  }
 }
 
 function menuBar() {
