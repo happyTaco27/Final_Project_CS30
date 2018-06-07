@@ -21,6 +21,7 @@ let health;
 let mana;
 let activeItem;
 let activeSpell;
+let state = "homeScreen";
 
 
 function preload() {
@@ -68,11 +69,32 @@ function setup() {
 
 function draw() {
   background(255);
-  displayGrid();
-  displayObjects();
-  borderThingy();
-  playerThing();
-  menuBar();
+  if (state === "homeScreen") {
+    displayHomeScreen();
+  }
+
+  if (state === "game") {
+    displayGrid();
+    displayObjects();
+    borderThingy();
+    playerThing();
+    menuBar();
+  }
+
+}
+
+function displayHomeScreen() {
+  background(255);
+  textSize(32);
+  text("press Enter to start", windowWidth / 2 - 150, windowHeight / 2);
+  if (keyCode === 13) {
+    state = "game";
+  }
+}
+
+function statusMenu() {
+  background(255);
+
 }
 
 function menuBar() {
@@ -109,7 +131,7 @@ function currentSpell() {
 }
 
 function displayCurrentSpell() {
-  
+
 }
 
 // disables window scrolling
