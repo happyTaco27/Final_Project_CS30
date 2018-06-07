@@ -86,6 +86,7 @@ function displayGrid() {
 
       else if (grid[x][y] === "2") {
         fill(0);
+        strok(0);
         rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
       else {

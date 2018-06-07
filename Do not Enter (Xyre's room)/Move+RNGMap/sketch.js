@@ -88,8 +88,9 @@ function draw() {
   displayObjects();
   borderThingy();
   playerThing();
+  //Makes the Blue/Red tiles stop showing if variable is false
   if (isCharClicked) {
-    possibleMoveTiles(gridSpace);
+    possibleMoveTiles(playerSpace);
   }
   noscroll();
 }
