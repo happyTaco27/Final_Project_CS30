@@ -110,6 +110,7 @@ function setup() {
   print("L:",playerBonus[6]);
   print("--------------------------------------------------------");
 }
+
 function draw() {
   background(255);
   levelUp();
@@ -119,6 +120,7 @@ function draw() {
   playerThing();
   menuBar();
 }
+
 function displayGrid() {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < cols; y++) {
@@ -148,6 +150,7 @@ function displayObjects() {
     }
   }
 }
+
 function arrayMaker(num, xLength, yLength) {
   let grid = [];
   for (let x = 0; x < xLength; x++) {
@@ -163,8 +166,8 @@ function createMap() {
   let maxTunnels = 50,
     maxLength = 8,
     map = arrayMaker("O", rows, cols),
-    currentRow = floor(random() * rows),
-    currentColumn = floor(random() * cols),
+    currentRow = Math.floor(Math.random() * rows),
+    currentColumn = Math.floor(Math.random() * cols),
     directions = [
       [-1, 0],
       [1, 0],
