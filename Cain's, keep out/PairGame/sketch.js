@@ -93,8 +93,12 @@ function displayHomeScreen() {
 }
 
 function statusMenu() {
+  push();
   background(255);
 
+
+
+  pop();
 }
 
 function menuBar() {
