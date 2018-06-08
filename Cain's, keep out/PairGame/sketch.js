@@ -40,6 +40,7 @@ function preload() {
   wallTile = loadImage("images/qubodup-light_wood.png");
 
   barTexture = loadImage("assets/sprites/statusbar.png")
+
 }
 
 function setup() {
@@ -79,6 +80,9 @@ function draw() {
     borderThingy();
     playerThing();
     menuBar();
+    if (keyCode === 9) {
+      statusMenu();
+    }
   }
 
 }
@@ -95,10 +99,10 @@ function displayHomeScreen() {
 function statusMenu() {
   push();
   background(255);
+  
 
 
-
-  if (keyCode === 9 || keyCode === 27) {
+  if (keyCode === 27) {
     pop();
   }
 }
