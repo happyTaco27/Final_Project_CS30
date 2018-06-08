@@ -40,6 +40,7 @@ function preload() {
   wallTile = loadImage("images/qubodup-light_wood.png");
 
   barTexture = loadImage("assets/sprites/statusbar.png")
+
 }
 
 function setup() {
@@ -79,6 +80,15 @@ function draw() {
     borderThingy();
     playerThing();
     menuBar();
+
+    if (keyCode === 73) {
+      statusMenu();
+    }
+    if (keyCode === 72) {
+      helpScreen();
+    }
+
+
   }
 
 }
@@ -92,13 +102,27 @@ function displayHomeScreen() {
   }
 }
 
+function helpScreen() {
+  push();
+  background(255)
+  text("Click on tiles to move the character", 10, 50);
+  text("The amount of tiles your character can move in one turn is dependant on your stats", 10, 100);
+  text("press H to access the help menu", 10, 150);
+  text("Press I to access the status menu", 10, 200);
+  text("Press ESC to exit menus", 10, 250);
+
+  if (keyCode === 73) {
+    pop();
+  }
+}
+
 function statusMenu() {
   push();
   background(255);
 
 
 
-  if (keyCode === 9 || keyCode === 27) {
+  if (keyCode === 27) {
     pop();
   }
 }
