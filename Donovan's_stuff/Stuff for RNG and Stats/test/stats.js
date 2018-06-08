@@ -11,6 +11,7 @@ let ifInventoryIsOpen=false;
 let d20;
 let counter;
 let statBar;
+let lootFound=false;
 lvl=1;
 exp=0;
 softSkillsPoints=5;
@@ -88,7 +89,6 @@ function buffCheck()  {
 //constat running functions//
 function draw() {
   background(255);
-  display();
   levelUp();
 
   if(mouseIsPressed){
@@ -128,10 +128,10 @@ function levelUp(){
     print("Current Soft Skill Points:",softSkillsPoints);
   }
 }
-//un-useable at current time
-// function skillTree(){
-//
-// }
-function display(){
-  image(statBar,0,0);
+//This randomly generates loot
+function findLoot() {
+  let loot=[];
+  if(foundLoot=true){
+
+  }
 }
