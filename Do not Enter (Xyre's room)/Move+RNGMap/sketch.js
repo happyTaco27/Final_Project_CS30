@@ -11,7 +11,7 @@ let wallTile;
 let highlightTile;
 let blankSpace;
 let highlightSpace;
-let loadLevel;
+let loadLevel0;
 let loadLevel1;
 let gridSpace;
 let startTile;

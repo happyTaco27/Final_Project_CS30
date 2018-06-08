@@ -21,8 +21,10 @@ let charFSide;
 let charBSide;
 let charLSide;
 let charRSide;
+let enemySkelly;
 let isCharClicked;
 let nextTurn;
+let shouldChase;
 
 function preload() {
   testGrounds = "assets/Levels/TestGrounds.txt";
@@ -35,6 +37,7 @@ function preload() {
   charBSide = loadImage("images/Back1.png");
   charLSide = loadImage("images/Left1.png");
   charRSide = loadImage("images/Right1.png");
+  enemySkelly = loadImage("images/Skeleton.png");
 
   floorTile = loadImage("images/Tile_5.png");
   wallTile = loadImage("images/qubodup-light_wood.png");
@@ -54,6 +57,7 @@ function setup() {
   charTile = charFSide;
   isCharClicked = false;
   nextTurn = false;
+  shouldChase = false;
   strokeWeight(2);
 
   for (let x = 0; x < rows; x++) {
@@ -67,13 +71,13 @@ function setup() {
 function draw() {
   background(255);
   displayGrid();
+  if (isCharClicked) {
+    possibleMoveTiles(gridSpace);
+  }
   displayObjects();
   borderThingy();
   playerThing();
   enemyThing();
-  if (isCharClicked) {
-    possibleMoveTiles(gridSpace);
-  }
   if (nextTurn) {
     enemyMove();
   }
@@ -120,9 +124,7 @@ function displayObjects() {
         rect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
       if (gridSpace[x][y] === 4) {
-        fill(0);
-        stroke(0);
-        rect(x * cellSize, y * cellSize, cellSize, cellSize);
+        image(enemySkelly, x * cellSize, y * cellSize, cellSize, cellSize);
       }
 
     }
@@ -246,17 +248,19 @@ function possibleMoveTiles(map) {
 }
 
 function enemyMove() {
-  if (enemyMoveX < moveX) {
-    enemyMoveX++;
-  }
-  if (enemyMoveX > moveX) {
-    enemyMoveX--;
-  }
-  if (enemyMoveY < moveY) {
-    enemyMoveY++;
-  }
-  if (enemyMoveY > moveY) {
-    enemyMoveY--;
+  if (shouldChase) {
+    if (enemyMoveX + 1 < moveX && grid[enemyMoveX + 1][enemyMoveY] === "0") {
+      enemyMoveX++;
+    }
+    if (enemyMoveX - 1 > moveX && grid[enemyMoveX - 1][enemyMoveY] === "0") {
+      enemyMoveX--;
+    }
+    if (enemyMoveY + 1 < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+      enemyMoveY++;
+    }
+    if (enemyMoveY - 1 > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+      enemyMoveY--;
+    }
   }
   clearOutBodies();
   nextTurn = false;
@@ -362,8 +366,14 @@ function mouseClicked() {
       nextTurn = true;
     }
   }
+  if ((enemyMoveY + 3) >= moveY || (enemyMoveY - 3) <= moveY || (enemyMoveX + 3) >= moveX || (enemyMoveX - 3) <= moveX) {
+    shouldChase = true;
+  }
+  if ((enemyMoveY + 3) < moveY || (enemyMoveY - 3) > moveY || (enemyMoveX + 3) < moveX || (enemyMoveX - 3) > moveX) {
+    shouldChase = false;
+  }
   possibleMoveTiles(gridSpace);
-  clearOutBodies();
+  clearOutBodies()
 }
 
 function clearOutBodies() {
