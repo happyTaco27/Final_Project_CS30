@@ -93,6 +93,7 @@ function draw() {
 
 }
 
+
 function displayHomeScreen() {
   background(255);
   textSize(32);
