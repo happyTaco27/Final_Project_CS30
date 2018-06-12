@@ -249,17 +249,69 @@ function possibleMoveTiles(map) {
 
 function enemyMove() {
   if (shouldChase) {
-    if (enemyMoveX + 1 < moveX && grid[enemyMoveX + 1][enemyMoveY] === "0") {
+    //Right
+    if (enemyMoveX + 1 < moveX) {
+      if (grid[enemyMoveX + 1][enemyMoveY] === "0") {
       enemyMoveX++;
+      }
+      else if (grid[enemyMoveX + 1][enemyMoveY] === "1")
+        if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+          enemyMoveY--;
+        }
+        else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+          enemyMoveY++;
+        }
+        else {
+          enemyMoveY = enemyMoveY + 0;
+        }
     }
-    if (enemyMoveX - 1 > moveX && grid[enemyMoveX - 1][enemyMoveY] === "0") {
-      enemyMoveX--;
+    //Left
+    else if (enemyMoveX - 1 > moveX) {
+      if (grid[enemyMoveX - 1][enemyMoveY] === "0") {
+        enemyMoveX--;
+      }
+      else if (grid[enemyMoveX - 1][enemyMoveY] === "1")
+        if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+          enemyMoveY--;
+        }
+        else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+          enemyMoveY++;
+        }
+        else {
+          enemyMoveY = enemyMoveY + 0;
+        }
     }
-    if (enemyMoveY + 1 < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
-      enemyMoveY++;
+    //Down
+    else if (enemyMoveY + 1 < moveY) {
+      if (grid[enemyMoveX][enemyMoveY + 1] === "0") {
+        enemyMoveY++;
+      }
+      else if (grid[enemyMoveX][enemyMoveY + 1] === "1")
+        if (enemyMoveX > moveX && grid[enemyMoveX - 1][enemyMoveY] === "0") {
+          enemyMoveX--;
+        }
+        else if (enemyMoveY < moveY && grid[enemyMoveX + 1][enemyMoveY] === "0") {
+          enemyMoveX++;
+        }
+        else {
+          enemyMoveX = enemyMoveX + 0;
+        }
     }
-    if (enemyMoveY - 1 > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
-      enemyMoveY--;
+    //Up
+    else if (enemyMoveY - 1 > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+      if (grid[enemyMoveX][enemyMoveY - 1] === "0") {
+        enemyMoveY--;
+      }
+      else if (grid[enemyMoveX][enemyMoveY - 1] === "1")
+        if (enemyMoveY > moveY && grid[enemyMoveX - 1][enemyMoveY] === "0") {
+          enemyMoveX--;
+        }
+        else if (enemyMoveY < moveY && grid[enemyMoveX + 1][enemyMoveY] === "0") {
+          enemyMoveX++;
+        }
+        else {
+          enemyMoveX = enemyMoveX + 0;
+        }
     }
   }
   clearOutBodies();
