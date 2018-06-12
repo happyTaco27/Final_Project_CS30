@@ -18,6 +18,7 @@ let loadLines0,loadLines1;
 let barTexture;
 let loadLevel;
 let loadLevel1;
+let isTurn;
 
 function preload() {
   // This loads in the grids
@@ -42,6 +43,7 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  isTurn=true;
   //setting level
   lvl=1;
   //setting starting exp
@@ -413,5 +415,10 @@ function levelUp(){
     print("Exp:",exp,"/ ",expToLevelUp," Level: ",lvl);
     print("S:",special[0]," P:",special[1]," E:",special[2]," C:",special[3]," I:",special[4]," A:",special[5]," L:",special[6]);
     print("Current Soft Skill Points:",softSkillsPoints);
+  }
+}
+function playerTurn() {
+  if (isTurn===true) {
+    
   }
 }
