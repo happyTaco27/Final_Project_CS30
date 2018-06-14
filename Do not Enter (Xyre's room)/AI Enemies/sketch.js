@@ -326,6 +326,18 @@ function enemyThing() {
   gridSpace[enemyMoveX][enemyMoveY] = 4;
 }
 
+class EnemyAI {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.shouldChase = false;
+  }
+
+  display() {
+
+  }
+}
+
 function borderThingy() {
   noFill();
   rect(0, 0, rows * cellSize, cols * cellSize);
