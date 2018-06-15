@@ -1,5 +1,3 @@
-//this is constantly checking if exp requirments are met to level up
-
 //holds values for health
 function healthPoints() {
 }

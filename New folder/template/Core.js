@@ -1,11 +1,7 @@
 let grid,rows,cols,gridSpace,cellSize;
-
 let floorTile,wallTile,charTile,testGrounds,blankSpace;
-
 let charFSide,charBSide,charLSide,charRSide;
-
 let startTile,endTile,playerSpace,physicalSpace,highlightTile,highlightSpace,isCharClicked;
-
 let moveX,moveY;
 let playerBonus=[],buff=[];
 let health,mana,softSkillsPoints;
@@ -19,7 +15,7 @@ let barTexture;
 let loadLevel;
 let loadLevel1;
 let isTurn;
-
+let state = "homeScreen";
 function preload() {
   // This loads in the grids
   blankSpace = "assets/Levels/BlankSpace.txt";
@@ -39,8 +35,9 @@ function preload() {
   wallTile = loadImage("images/qubodup-light_wood.png");
   startTile = loadImage("images/ladderup.png");
   endTile = loadImage("images/ladderdown.png");
+  testGrounds = "assets/Levels/TestGrounds.txt";
+  loadLines0 = loadStrings(testGrounds);
 }
-
 function setup() {
   createCanvas(windowWidth, windowHeight);
   isTurn=true;
@@ -81,7 +78,7 @@ function setup() {
       playerSpace[x][y] = tileType;
     }
   }
-  base = createMap();
+  let base = createMap();
   grid = terraform(base);
   isCharClicked = false;
   //In triggeredEvents.js
@@ -113,19 +110,67 @@ function setup() {
   print("L:",playerBonus[6]);
   print("--------------------------------------------------------");
 }
-
 function draw() {
   background(255);
   levelUp();
-  displayGrid();
-  displayObjects();
-  borderThingy();
-  playerThing();
+  if (state === "homeScreen") {
+    displayHomeScreen();
+  }
+  if (state === "game") {
+    displayGrid();
+    displayObjects();
+    borderThingy();
+    playerThing();
+    menuBar();
+
+
+    if (keyCode === 73) {
+      statusMenu();
+    }
+    if (keyCode === 72) {
+      helpScreen();
+    }
+  }
   //Makes the Blue/Red tiles stop showing if variable is false
   if (isCharClicked) {
     possibleMoveTiles(playerSpace);
   }
   noscroll();
+}
+function displayHomeScreen() {
+  background(255);
+  textSize(32);
+  text("press Enter to start", windowWidth / 2 - 150, windowHeight / 2);
+  if (keyCode === 13) {
+    state = "game";
+  }
+}
+function helpScreen() {
+  push();
+  background(255);
+  text("Click on tiles to move the character", 10, 50);
+  text("The amount of tiles your character can move in one turn is dependant on your stats", 10, 100);
+  text("press H to access the help menu", 10, 150);
+  text("Press I to access the status menu", 10, 200);
+  text("Press ESC to exit menus", 10, 250);
+
+  if (keyCode === 73) {
+    pop();
+  }
+}
+function statusMenu() {
+  push();
+  background(255);
+
+
+
+  if (keyCode === 27) {
+    pop();
+  }
+}
+function menuBar() {
+  fill(153, 102, 51);
+  image(barTexture, 0, rows * 42, width, 6 * cellSize);
 }
 //Stops mouse scroll (though it isn't quite doing it)
 function noscroll() {
@@ -319,18 +364,18 @@ function createMap() {
   while (maxTunnels && maxLength && rows && cols) {
     do {
       randomDirection = directions[floor(random() * directions.length)];
-    } while ((randomDirection[0] === -lastDirection[0] &&
-        randomDirection[1] === -lastDirection[1]) ||
-      (randomDirection[0] === lastDirection[0] &&
-        randomDirection[1] === lastDirection[1]));
+    } while (randomDirection[0] === -lastDirection[0] &&
+        randomDirection[1] === -lastDirection[1] ||
+      randomDirection[0] === lastDirection[0] &&
+        randomDirection[1] === lastDirection[1]);
     let randomLength = ceil(random() * maxLength),
       tunnelLength = 0;
 
     while (tunnelLength < randomLength) {
-      if (((currentRow === 0) && (randomDirection[0] === -1)) ||
-        ((currentColumn === 0) && (randomDirection[1] === -1)) ||
-        ((currentRow === rows - 1) && (randomDirection[0] === 1)) ||
-        ((currentColumn === cols - 1) && (randomDirection[1] === 1))) {
+      if (currentRow === 0 && randomDirection[0] === -1 ||
+        currentColumn === 0 && randomDirection[1] === -1 ||
+        currentRow === rows - 1 && randomDirection[0] === 1 ||
+        currentColumn === cols - 1 && randomDirection[1] === 1) {
         break;
       }
       else {
@@ -417,8 +462,157 @@ function levelUp(){
     print("Current Soft Skill Points:",softSkillsPoints);
   }
 }
-function playerTurn() {
-  if (isTurn===true) {
-    
+//This makes the stats for the character and AI (AI's stats are place-holder atm for testing)
+function makingStats()  {
+  for(let x=0;x<7;x++){
+    //Player's stats
+    special.push(round(random(20,5)));
+    //AI stats
+    aiSpecial.push(round(random(15,5)));
   }
+}
+//This checks what level each special trait is
+function buffCheck(){
+  for(let x=0;x<7;x++){
+    if(special[x]<=5){
+      buff.push("-");
+    }
+    else if(special[x]<=10){
+      buff.push(" ");
+    }
+    else if(special[x]<=15){
+      buff.push("+");
+    }
+    else if(special[x]<=19){
+      buff.push("++");
+    }
+    else if(special[x]===20){
+      buff.push("+++");
+    }
+  }
+}
+//This is triggered when an AI apears
+function statCheck(){
+  for(let x=0;x<7;x++){
+    if(special[x]<aiSpecial[x]){
+      playerBonus.push("Less");
+    }
+    else if(special[x]>aiSpecial[x]){
+      playerBonus.push("Greater");
+    }
+    else{
+      playerBonus.push("Even");
+    }
+  }
+}
+// Whatever the number of the moveX and moveY variables are will determine the player's location
+function playerThing() {
+  playerSpace[moveX][moveY] = 2;
+}
+//Just sets out a nice border around th grid
+function borderThingy() {
+  noFill();
+  stroke(0);
+  rect(0, 0, rows * cellSize, cols * cellSize);
+}
+//Wherever you click, the character will move towards that direction
+function mouseClicked() {
+  //Selecting Character
+  if (floor(mouseY / cellSize) === moveY && floor(mouseX / cellSize) === moveX) {
+    isCharClicked = !isCharClicked;
+  }
+  if (isCharClicked) {
+    //Up-Right
+    if (floor(mouseY / cellSize) < moveY
+    && floor(mouseX / cellSize) > moveX
+    && grid[moveX + 1][moveY - 1] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveY--;
+      moveX++;
+      charTile = charRSide;
+      isCharClicked = false;
+    }
+    //Up-Left
+    else if (floor(mouseY / cellSize) < moveY
+    && floor(mouseX / cellSize) < moveX
+    && grid[moveX - 1][moveY - 1] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveY--;
+      moveX--;
+      charTile = charLSide;
+      isCharClicked = false;
+    }
+    //Down-Right
+    else if (floor(mouseY / cellSize) > moveY
+    && floor(mouseX / cellSize) > moveX
+    && grid[moveX + 1][moveY + 1] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveY++;
+      moveX++;
+      charTile = charRSide;
+      isCharClicked = false;
+    }
+    //Down-Left
+    else if (floor(mouseY / cellSize) > moveY
+    && floor(mouseX / cellSize) < moveX
+    && grid[moveX - 1][moveY + 1] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveY++;
+      moveX--;
+      charTile = charLSide;
+      isCharClicked = false;
+    }
+    //Up
+    else if (floor(mouseY / cellSize) < moveY
+    && grid[moveX][moveY - 1] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveY = floor(mouseY / cellSize);
+      charTile = charBSide;
+      isCharClicked = false;
+    }
+    //Down
+    else if (floor(mouseY / cellSize) > moveY
+    && grid[moveX][moveY + 1] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveY = floor(mouseY / cellSize);
+      charTile = charFSide;
+      isCharClicked = false;
+    }
+    //Left
+    else if (floor(mouseX / cellSize) < moveX
+    && grid[moveX - 1][moveY] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveX = floor(mouseX / cellSize);
+      charTile = charLSide;
+      isCharClicked = false;
+    }
+    //Right
+    else if (floor(mouseX / cellSize) > moveX
+    && grid[moveX + 1][moveY] === 0
+    && playerSpace[floor(mouseX / cellSize)][floor(mouseY / cellSize)] === 1) {
+      moveX = floor(mouseX / cellSize);
+      charTile = charRSide;
+      isCharClicked = false;
+    }
+  }
+  possibleMoveTiles(playerSpace);
+  clearOutBodies();
+}
+//Refreshes the playerSpace so there won't be any duplicates
+function clearOutBodies() {
+  let theGrid = playerSpace;
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < cols; y++) {
+      if (theGrid[x][y] === 2) {
+        theGrid[x][y] = 0;
+      }
+      if (theGrid[x][y] === 1) {
+        theGrid[x][y] = 0;
+      }
+      if (theGrid[x][y] === 3) {
+        theGrid[x][y] = 0;
+      }
+    }
+  }
+  return theGrid;
 }
