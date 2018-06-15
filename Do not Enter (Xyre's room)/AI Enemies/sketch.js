@@ -327,14 +327,77 @@ function enemyThing() {
 }
 
 class EnemyAI {
-  constructor(x, y) {
+  constructor(x, y, array) {
     this.x = x;
     this.y = y;
-    this.shouldChase = false;
   }
 
-  display() {
-
+  move() {
+    if (shouldChase) {
+      //Right
+      if (this.x + 1 < moveX) {
+        if (grid[enemyMoveX + 1][enemyMoveY] === "0") {
+        enemyMoveX++;
+        }
+        else if (grid[enemyMoveX + 1][enemyMoveY] === "1")
+          if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+            enemyMoveY--;
+          }
+          else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+            enemyMoveY++;
+          }
+          else {
+            enemyMoveY = enemyMoveY + 0;
+          }
+      }
+      //Left
+      else if (this.x - 1 > moveX) {
+        if (grid[enemyMoveX - 1][enemyMoveY] === "0") {
+          enemyMoveX--;
+        }
+        else if (grid[enemyMoveX - 1][enemyMoveY] === "1")
+          if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+            enemyMoveY--;
+          }
+          else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+            enemyMoveY++;
+          }
+          else {
+            enemyMoveY = enemyMoveY + 0;
+          }
+      }
+      //Down
+      else if (this.y + 1 < moveY) {
+        if (grid[this.x][this.y + 1] === "0") {
+          this.y++;
+        }
+        else if (grid[this.x][this.y + 1] === "1")
+          if (this.x > moveX && grid[this.x - 1][this.y] === "0") {
+            this.x--;
+          }
+          else if (this.y < moveY && grid[this.x + 1][this.y] === "0") {
+            this.x++;
+          }
+          else {
+            this.x = this.x + 0;
+          }
+      }
+      //Up
+      else if (this.y - 1 > moveY) {
+        if (grid[enemyMoveX][enemyMoveY - 1] === "0") {
+          enemyMoveY--;
+        }
+        else if (grid[enemyMoveX][enemyMoveY - 1] === "1")
+          if (enemyMoveY > moveY && grid[enemyMoveX - 1][enemyMoveY] === "0") {
+            enemyMoveX--;
+          }
+          else if (enemyMoveY < moveY && grid[enemyMoveX + 1][enemyMoveY] === "0") {
+            enemyMoveX++;
+          }
+          else {
+            enemyMoveX = enemyMoveX + 0;
+          }
+      }
   }
 }
 
