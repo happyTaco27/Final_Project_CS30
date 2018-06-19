@@ -335,37 +335,37 @@ class EnemyAI {
   move() {
     if (shouldChase) {
       //Right
-      if (this.x + 1 < moveX) {
-        if (grid[enemyMoveX + 1][enemyMoveY] === "0") {
-        enemyMoveX++;
-        }
-        else if (grid[enemyMoveX + 1][enemyMoveY] === "1")
-          if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
-            enemyMoveY--;
-          }
-          else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
-            enemyMoveY++;
-          }
-          else {
-            enemyMoveY = enemyMoveY + 0;
-          }
-      }
+      // if (this.x + 1 < moveX) {
+      //   if (grid[enemyMoveX + 1][enemyMoveY] === "0") {
+      //   enemyMoveX++;
+      //   }
+      //   else if (grid[enemyMoveX + 1][enemyMoveY] === "1")
+      //     if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+      //       enemyMoveY--;
+      //     }
+      //     else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+      //       enemyMoveY++;
+      //     }
+      //     else {
+      //       enemyMoveY = enemyMoveY + 0;
+      //     }
+      // }
       //Left
-      else if (this.x - 1 > moveX) {
-        if (grid[enemyMoveX - 1][enemyMoveY] === "0") {
-          enemyMoveX--;
-        }
-        else if (grid[enemyMoveX - 1][enemyMoveY] === "1")
-          if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
-            enemyMoveY--;
-          }
-          else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
-            enemyMoveY++;
-          }
-          else {
-            enemyMoveY = enemyMoveY + 0;
-          }
-      }
+      // else if (this.x - 1 > moveX) {
+      //   if (grid[enemyMoveX - 1][enemyMoveY] === "0") {
+      //     enemyMoveX--;
+      //   }
+      //   else if (grid[enemyMoveX - 1][enemyMoveY] === "1")
+      //     if (enemyMoveY > moveY && grid[enemyMoveX][enemyMoveY - 1] === "0") {
+      //       enemyMoveY--;
+      //     }
+      //     else if (enemyMoveY < moveY && grid[enemyMoveX][enemyMoveY + 1] === "0") {
+      //       enemyMoveY++;
+      //     }
+      //     else {
+      //       enemyMoveY = enemyMoveY + 0;
+      //     }
+      // }
       //Down
       else if (this.y + 1 < moveY) {
         if (grid[this.x][this.y + 1] === "0") {
@@ -383,21 +383,21 @@ class EnemyAI {
           }
       }
       //Up
-      else if (this.y - 1 > moveY) {
-        if (grid[enemyMoveX][enemyMoveY - 1] === "0") {
-          enemyMoveY--;
-        }
-        else if (grid[enemyMoveX][enemyMoveY - 1] === "1")
-          if (enemyMoveY > moveY && grid[enemyMoveX - 1][enemyMoveY] === "0") {
-            enemyMoveX--;
-          }
-          else if (enemyMoveY < moveY && grid[enemyMoveX + 1][enemyMoveY] === "0") {
-            enemyMoveX++;
-          }
-          else {
-            enemyMoveX = enemyMoveX + 0;
-          }
-      }
+      // else if (this.y - 1 > moveY) {
+      //   if (grid[enemyMoveX][enemyMoveY - 1] === "0") {
+      //     enemyMoveY--;
+      //   }
+      //   else if (grid[enemyMoveX][enemyMoveY - 1] === "1")
+      //     if (enemyMoveY > moveY && grid[enemyMoveX - 1][enemyMoveY] === "0") {
+      //       enemyMoveX--;
+      //     }
+      //     else if (enemyMoveY < moveY && grid[enemyMoveX + 1][enemyMoveY] === "0") {
+      //       enemyMoveX++;
+      //     }
+      //     else {
+      //       enemyMoveX = enemyMoveX + 0;
+      //     }
+      // }
   }
 }
 
